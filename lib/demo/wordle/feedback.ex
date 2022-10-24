@@ -5,8 +5,8 @@ defmodule Demo.Wordle.Feedback do
             feedback: "",
             blackList: [],
             neededList: [],
-            knownList: {},
-            positionalBlackList: {}]
+            knownList: %{},
+            positionalBlackList: %{}]
 
   @spec fromStrings(binary, binary) :: %Feedback{}
   def fromStrings(word, feedbackString) do

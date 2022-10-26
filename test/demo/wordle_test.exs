@@ -18,7 +18,7 @@ defmodule WordleTest do
     assert f.blackList == ["i"]
     assert f.neededList == ["a"] # TODO should I also put 2s in there?
     assert f.knownList == %{2 => "e", 5 => "s"} # NOTE I'm using 1-based index for this.. because :lists.nth does that...
-    assert f.positionalBlackList == %{4 => "i"}
+    assert f.positionalBlackList == [{4, "i"}, {1, "a"}]
   end
 
   test "exact match feedback" do
@@ -34,7 +34,7 @@ defmodule WordleTest do
       4 => "i",
       5 => "s"
     } # NOTE I'm using 1-based index for this.. because :lists.nth does that...
-    assert f.positionalBlackList == %{}
+    assert f.positionalBlackList == []
   end
 
   test "solve based on exact match" do
@@ -50,7 +50,7 @@ defmodule WordleTest do
       4 => "i",
       5 => "s"
     } # NOTE I'm using 1-based index for this.. because :lists.nth does that...
-    assert f.positionalBlackList == %{}
+    assert f.positionalBlackList == []
 
     assert ["aegis"] == Wordle.solve([f])
   end
@@ -105,7 +105,7 @@ defmodule WordleTest do
       blackList: ["e", "g", "i", "s", "q", "r"],
       neededList: ["a", "u"],
       knownList: %{5 => "t"},
-      positionalBlackList: %{1 => "q", 2 => "e", 3 => "g", 4 => "r", 5 => "s"} # TODO ooooohh.. I think I did this positionalBlackList weird, it doesn't merge well!!
+      positionalBlackList: [{5, "s"}, {4, "i"}, {3, "g"}, {2, "e"}, {1, "a"}, {4, "r"}, {3, "a"}, {2, "u"}, {1, "q"}]
     }
     f1 = Feedback.fromStrings("aegis", "10000")
     IO.inspect(f1)

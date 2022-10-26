@@ -6,7 +6,7 @@ defmodule Demo.Wordle.Feedback do
             blackList: [],
             neededList: [],
             knownList: %{},
-            positionalBlackList: %{}]
+            positionalBlackList: []]
 
   @spec fromStrings(binary, binary) :: %Feedback{}
   def fromStrings(word, feedbackString) do
@@ -52,11 +52,11 @@ defmodule Demo.Wordle.Feedback do
       )
     positionalBlackList =
       augmentedPairs
-      |> Enum.filter(fn {_, f, _} -> f == "0" end)
+      |> Enum.filter(fn {_, f, _} -> f == "0" or f == "1" end)
       |> Enum.reduce(
-        %{},
+        [],
         fn ({character, _feedbackNumStr, position}, accum) ->
-          Map.put(accum, position, character)
+          [{position, character} | accum]
         end
       )
 

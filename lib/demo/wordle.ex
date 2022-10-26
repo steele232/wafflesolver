@@ -31,7 +31,9 @@ defmodule Demo.Wordle do
     mergedBlackList = (left.blackList ++ right.blackList) |> Enum.uniq()
     mergedNeededList = (left.neededList ++ right.neededList) |> Enum.uniq()
     mergedKnownList = Map.merge(left.knownList, right.knownList)
-    mergedPositionalBlackList = Map.merge(left.positionalBlackList, right.positionalBlackList)
+
+    mergedPositionalBlackList =
+      (left.positionalBlackList ++ right.positionalBlackList) |> Enum.uniq()
 
     %Feedback{
       guess: "",
@@ -65,9 +67,9 @@ defmodule Demo.Wordle do
     )
   end
 
-  defp filterByPositionalBlacklist(word, positionalBlackListMap) do
+  defp filterByPositionalBlacklist(word, positionalBlackList) do
     Enum.all?(
-      positionalBlackListMap,
+      positionalBlackList,
       fn {position, characterToAvoid} ->
         foundChar = :lists.nth(position, String.graphemes(word))
         foundChar != characterToAvoid
@@ -89,7 +91,12 @@ defmodule Demo.Wordle do
               Enum.filter(reverseAlphabetList, fn alphChar ->
                 # NOT in positionalBlacklist
                 # and NOT in blacklist
-                not Map.has_key?(aggregatedFeedback.positionalBlackList, alphChar) and
+                not Enum.any?(
+                  aggregatedFeedback.positionalBlackList,
+                  fn {position, characterToAvoid} ->
+                    position == idx and characterToAvoid == alphChar
+                  end
+                ) and
                   not Enum.member?(aggregatedFeedback.blackList, alphChar)
               end) ++
               ["]"]

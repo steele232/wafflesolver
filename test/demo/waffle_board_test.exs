@@ -12,7 +12,7 @@ defmodule WaffleBoardTest do
         ["d", "m", "v", "e", "e"]
       ]
     }
-    IO.inspect(board)
+    # IO.inspect(board)
     assert "duern" ==
       Board.getHorizontalWord(board, 1)
     assert "imtae" ==
@@ -38,7 +38,7 @@ defmodule WaffleBoardTest do
         ["d", "v", "v", "e", "e"]
       ]
     }
-    IO.inspect(board)
+    # IO.inspect(board)
     assert "duern" ==
       Board.getHorizontalWord(board, 1)
     assert "omtea" ==

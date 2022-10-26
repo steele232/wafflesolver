@@ -5,7 +5,7 @@ defmodule WordleTest do
 
   test "grab words from config" do
     wordsString = Wordle.grabAllWordsFromConfig()
-    IO.inspect(:lists.sublist(wordsString, 50))
+    # IO.inspect(:lists.sublist(wordsString, 50))
 
     assert 50 < length(wordsString)
   end
@@ -108,9 +108,9 @@ defmodule WordleTest do
       positionalBlackList: [{5, "s"}, {4, "i"}, {3, "g"}, {2, "e"}, {1, "a"}, {4, "r"}, {3, "a"}, {2, "u"}, {1, "q"}]
     }
     f1 = Feedback.fromStrings("aegis", "10000")
-    IO.inspect(f1)
+    # IO.inspect(f1)
     f2 = Feedback.fromStrings("quart", "01102")
-    IO.inspect(f2)
+    # IO.inspect(f2)
     f3 = Wordle.mergeFeedbacks(f1, f2)
     assert f1 != f3
     assert f3 == expectedFeedback

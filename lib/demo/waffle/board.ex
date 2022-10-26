@@ -65,9 +65,9 @@ defmodule Demo.Waffle.Board do
     leftChar = idx(board, leftI, leftJ)
     rightChar = idx(board, rightI, rightJ)
 
-    IO.inspect(board)
-    IO.inspect(leftChar)
-    IO.inspect(rightChar)
+    # IO.inspect(board)
+    # IO.inspect(leftChar)
+    # IO.inspect(rightChar)
 
     # put rightChar on the board in position leftI, leftJ
     # put leftChar on the board in position rightI, rightJ

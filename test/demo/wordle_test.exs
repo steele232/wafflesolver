@@ -86,11 +86,35 @@ defmodule WordleTest do
   end
 
   # test "regex .." do
-  #   Wordle.createRegexStringFromAggregatedFeedback(
+    # f1 = Feedback.fromStrings("aegis", "10000")
+    # f2 = Feedback.fromStrings("quart", "01102")
+    # f3 = Feedback.fromStrings("jaunt", "02202")
+    # f4 = Feedback.fromStrings("vault", "02222")
+    # Wordle.createRegexStringFromAggregatedFeedback(
 
-  #   )
+
+
+    # )
 
   # end
+
+  test "merge feedbacks with set-like properties" do
+    expectedFeedback = %Feedback{
+      guess: "",
+      feedback: "",
+      blackList: ["e", "g", "i", "s", "q", "r"],
+      neededList: ["a", "u"],
+      knownList: %{5 => "t"},
+      positionalBlackList: %{1 => "q", 2 => "e", 3 => "g", 4 => "r", 5 => "s"} # TODO ooooohh.. I think I did this positionalBlackList weird, it doesn't merge well!!
+    }
+    f1 = Feedback.fromStrings("aegis", "10000")
+    IO.inspect(f1)
+    f2 = Feedback.fromStrings("quart", "01102")
+    IO.inspect(f2)
+    f3 = Wordle.mergeFeedbacks(f1, f2)
+    assert f1 != f3
+    assert f3 == expectedFeedback
+  end
 
 
 end

@@ -20,29 +20,62 @@ defmodule Demo.Wordle do
   end
 
   defp aggregateFeedback(listOfFeedbacks) do
-    # TODO
-    %Feedback{}
+    Enum.reduce(
+      listOfFeedbacks,
+      %Feedback{},
+      &mergeFeedbacks/2
+    )
   end
 
-  defp mergeFeedbacks(left, right) do
-    # TODO
-    %Feedback{}
+  def mergeFeedbacks(left, right) do
+    mergedBlackList = (left.blackList ++ right.blackList) |> Enum.uniq()
+    mergedNeededList = (left.neededList ++ right.neededList) |> Enum.uniq()
+    mergedKnownList = Map.merge(left.knownList, right.knownList)
+    mergedPositionalBlackList = Map.merge(left.positionalBlackList, right.positionalBlackList)
+
+    %Feedback{
+      guess: "",
+      feedback: "",
+      blackList: mergedBlackList,
+      neededList: mergedNeededList,
+      knownList: mergedKnownList,
+      positionalBlackList: mergedPositionalBlackList
+    }
   end
 
-  defp filterByRegex(word, regex) do
+  def filterByRegex(word, regexString) do
+    Regex.compile!(regexString)
+    |> Regex.match?(word)
   end
 
-  defp filterByMultipleNeededChars(word, listOfNeededChars) do
+  def filterByMultipleNeededChars(word, listOfNeededChars) do
+    Enum.all?(
+      listOfNeededChars,
+      fn ch -> String.contains?(word, ch) end
+    )
   end
 
-  defp filterByKnownChars(word, knownWordMap) do
+  def filterByKnownChars(word, knownWordMap) do
+    Enum.all?(
+      knownWordMap,
+      fn {position, knownCharacter} ->
+        foundChar = :lists.nth(position, String.graphemes(word))
+        foundChar == knownCharacter
+      end
+    )
   end
 
   defp filterByPositionalBlacklist(word, positionalBlackListMap) do
+    Enum.all?(
+      positionalBlackListMap,
+      fn {position, characterToAvoid} ->
+        foundChar = :lists.nth(position, String.graphemes(word))
+        foundChar != characterToAvoid
+      end
+    )
   end
 
-  defp createRegexStringFromAggregatedFeedback(aggregatedFeedback) do
-
+  def createRegexStringFromAggregatedFeedback(aggregatedFeedback) do
     reverseAlphabetList = String.graphemes(@alphabet) |> :lists.reverse()
 
     Enum.map(1..5, fn idx ->
@@ -55,9 +88,9 @@ defmodule Demo.Wordle do
             ["["] ++
               Enum.filter(reverseAlphabetList, fn alphChar ->
                 # NOT in positionalBlacklist
-                (not Map.has_key?(aggregatedFeedback.positionalBlackList, alphChar)) and
                 # and NOT in blacklist
-                (not Enum.member?(aggregatedFeedback.blackList, alphChar))
+                not Map.has_key?(aggregatedFeedback.positionalBlackList, alphChar) and
+                  not Enum.member?(aggregatedFeedback.blackList, alphChar)
               end) ++
               ["]"]
           )

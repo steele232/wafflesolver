@@ -111,7 +111,7 @@ defmodule WaffleBoardTest do
     expectedCharactersAvailableList = ["y", "e", "h", "r", "a", "a", "k", "e", "w", "e", "a", "a", "m", "c", "n", "l", "n", "u", "k", "c", "d"]
     assert expectedCharactersAvailableList == Waffle.getCompleteListOfCharactersAvailableOnBoard(board)
 
-    IO.inspect Waffle.solve([board])
+    # IO.inspect Waffle.solve([board])
 
     # TODO see if this can be improved? But I think this is amazing..
     assert Waffle.solve([board]) == [
@@ -125,5 +125,25 @@ defmodule WaffleBoardTest do
 
   end
 
+  # test "test solving with accumulating boards" do
+  #   # TODO
+  #   board = %Board{
+  #     characterStrings: [
+  #       ["c", "l", "o", "t", "h"],
+  #       ["o", " ", "e", " ", "o"],
+  #       ["o", "a", "s", "a", "r"],
+  #       ["n", " ", "c", " ", "d"],
+  #       ["h", "n", "t", "l", "y"]
+  #     ],
+  #     feedbackStrings: [
+  #       ["2", "2", "2", "2", "2"],
+  #       ["2", " ", "1", " ", "0"],
+  #       ["3", "1", "2", "3", "1"],
+  #       ["0", " ", "0", " ", "2"],
+  #       ["2", "0", "2", "2", "2"]
+  #     ]
+  #   }
+  #   IO.inspect Waffle.solve([board])
+  # end
 
 end

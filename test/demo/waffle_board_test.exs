@@ -1,6 +1,7 @@
 defmodule WaffleBoardTest do
   use ExUnit.Case, async: true
   alias Demo.Waffle.Board
+  alias Demo.Waffle
 
   test "Board Construction 1" do
     board = %Board{
@@ -107,6 +108,20 @@ defmodule WaffleBoardTest do
     assert "21302" ==
       Board.getVerticalFeedback(board, 3)
 
+    expectedCharactersAvailableList = ["y", "e", "h", "r", "a", "a", "k", "e", "w", "e", "a", "a", "m", "c", "n", "l", "n", "u", "k", "c", "d"]
+    assert expectedCharactersAvailableList == Waffle.getCompleteListOfCharactersAvailableOnBoard(board)
+
+    IO.inspect Waffle.solve([board])
+
+    # TODO see if this can be improved? But I think this is amazing..
+    assert Waffle.solve([board]) == [
+      ["yucca"],
+      ["naked"],
+      ["yearn"],
+      ["awake", "aware", "crane", "drake", "eland", "whale"],
+      ["chalk", "clack", "crack", "whack", "wrack"],
+      ["ached", "ahead", "amend", "arced", "armed"]
+    ]
 
   end
 

@@ -9,14 +9,31 @@ defmodule Demo.Waffle.Board do
               ["0", "0", "0", "0", "0"],
               ["0", " ", "0", " ", "0"],
               ["0", "0", "0", "0", "0"]
+            ],
+            feedbackStrings: [
+              ["0", "0", "0", "0", "0"],
+              ["0", " ", "0", " ", "0"],
+              ["0", "0", "0", "0", "0"],
+              ["0", " ", "0", " ", "0"],
+              ["0", "0", "0", "0", "0"]
             ]
 
   @doc """
   idx takes numbers 1-5 for both indices, NOT zero-based indices
   """
-  @spec idx(Board, integer(), integer()) :: String.t()
-  def idx(board, i, j) do
+  @spec charIdx(Board, integer(), integer()) :: String.t()
+  def charIdx(board, i, j) do
     outer = board.characterStrings
+    inner = :lists.nth(i, outer)
+    :lists.nth(j, inner)
+  end
+
+  @doc """
+  idx takes numbers 1-5 for both indices, NOT zero-based indices
+  """
+  @spec feedbackIdx(Board, integer(), integer()) :: String.t()
+  def feedbackIdx(board, i, j) do
+    outer = board.feedbackStrings
     inner = :lists.nth(i, outer)
     :lists.nth(j, inner)
   end
@@ -58,12 +75,49 @@ defmodule Demo.Waffle.Board do
     |> List.to_string()
   end
 
+  @doc """
+  wordIdx takes numbers 1-3 as indices
+  wordIdx is from top-left
+  """
+  @spec getHorizontalFeedback(Board, integer()) :: String.t()
+  def getHorizontalFeedback(board, wordIdx) do
+    idx =
+      case wordIdx do
+        1 -> 1
+        2 -> 3
+        3 -> 5
+      end
+
+    :lists.nth(idx, board.feedbackStrings)
+    |> List.to_string()
+  end
+
+  @doc """
+  wordIdx takes numbers 1-3 as indices
+  wordIdx is from top-left
+  """
+  @spec getVerticalFeedback(Board, integer()) :: String.t()
+  def getVerticalFeedback(board, wordIdx) do
+    idx =
+      case wordIdx do
+        1 -> 1
+        2 -> 3
+        3 -> 5
+      end
+
+    Enum.map(
+      board.feedbackStrings,
+      fn li -> :lists.nth(idx, li) end
+    )
+    |> List.to_string()
+  end
+
   # i and j parameters must be between 1 and 5 inclusive --
   # but NOT including {2,2}, {2,4}, {4,2}, or {4,4} -- I mean I won't throw an error but this will cease to be a valid board
   @spec swap(Board, integer(), integer(), integer(), integer()) :: Board
   def swap(board, leftI, leftJ, rightI, rightJ) do
-    leftChar = idx(board, leftI, leftJ)
-    rightChar = idx(board, rightI, rightJ)
+    leftChar = charIdx(board, leftI, leftJ)
+    rightChar = charIdx(board, rightI, rightJ)
 
     # IO.inspect(board)
     # IO.inspect(leftChar)
@@ -85,11 +139,11 @@ defmodule Demo.Waffle.Board do
               ^i ->
                 case workingJ do
                   ^j -> newChar
-                  _other -> idx(board, workingI, workingJ)
+                  _other -> charIdx(board, workingI, workingJ)
                 end
 
               _other ->
-                idx(board, workingI, workingJ)
+                charIdx(board, workingI, workingJ)
             end
           end)
         end)

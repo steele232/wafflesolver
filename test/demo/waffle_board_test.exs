@@ -63,7 +63,52 @@ defmodule WaffleBoardTest do
 
   end
 
+  test "board construction with feedback 1" do
+    board = %Board{
+      characterStrings: [
+        ["y", "e", "h", "r", "a"],
+        ["a", " ", "k", " ", "e"],
+        ["w", "e", "a", "a", "m"],
+        ["c", " ", "n", " ", "l"],
+        ["n", "u", "k", "c", "d"]
+      ],
+      feedbackStrings: [
+        ["2", "0", "3", "0", "2"],
+        ["1", " ", "0", " ", "1"],
+        ["3", "1", "2", "1", "3"],
+        ["0", " ", "0", " ", "0"],
+        ["2", "0", "2", "0", "2"]
+      ]
+    }
+    # IO.inspect(board)
+    assert "yehra" ==
+      Board.getHorizontalWord(board, 1)
+    assert "weaam" ==
+      Board.getHorizontalWord(board, 2)
+    assert "nukcd" ==
+      Board.getHorizontalWord(board, 3)
+    assert "yawcn" ==
+      Board.getVerticalWord(board, 1)
+    assert "hkank" ==
+      Board.getVerticalWord(board, 2)
+    assert "aemld" ==
+      Board.getVerticalWord(board, 3)
 
+    assert "20302" ==
+      Board.getHorizontalFeedback(board, 1)
+    assert "31213" ==
+      Board.getHorizontalFeedback(board, 2)
+    assert "20202" ==
+      Board.getHorizontalFeedback(board, 3)
+    assert "21302" ==
+      Board.getVerticalFeedback(board, 1)
+    assert "30202" ==
+      Board.getVerticalFeedback(board, 2)
+    assert "21302" ==
+      Board.getVerticalFeedback(board, 3)
+
+
+  end
 
 
 end

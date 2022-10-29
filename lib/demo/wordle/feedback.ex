@@ -52,7 +52,7 @@ defmodule Demo.Wordle.Feedback do
       )
     positionalBlackList =
       augmentedPairs
-      |> Enum.filter(fn {_, f, _} -> f == "0" or f == "1" end)
+      |> Enum.filter(fn {_, f, _} -> f == "0" or f == "1" or f == "4" end)
       |> Enum.reduce(
         [],
         fn ({character, _feedbackNumStr, position}, accum) ->

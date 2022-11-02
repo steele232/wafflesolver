@@ -4,16 +4,9 @@ defmodule Demo.Waffle do
   alias Demo.Wordle
 
   def solve(listOfBoards) do
-    # TODO first attempt to solve all the words
-    # TODO print it out to see how we are doing...
     # TODO find the most solved word.. and then go from there
-
-    # TODO grab data necessary to run Wordle.solve/1
-    #   get list of feedbacks based on [{guess, feedback}]
-    #   for each word
-    #
-
-    firstBoard = listOfBoards |> List.first()
+    # .  preliminary Wordle solving should not be too hard
+    # .  then it's the iterating that seems more difficult for me...
 
     hw1Feedbacks =
       Enum.map(listOfBoards, fn b ->
@@ -70,18 +63,18 @@ defmodule Demo.Waffle do
     vw2F = Wordle.solve(vw2Feedbacks)
     vw3F = Wordle.solve(vw3Feedbacks)
 
-    listOfSolvedWords = [
-      hw1F,
-      hw2F,
-      hw3F,
-      vw1F,
-      vw2F,
-      vw3F
-    ]
+    mapOfFeedbacks = %{
+      hw1: hw1F,
+      hw2: hw2F,
+      hw3: hw3F,
+      vw1: vw1F,
+      vw2: vw2F,
+      vw3: vw3F
+    }
 
-    sortedList =
-      listOfSolvedWords
-      |> Enum.sort(fn left, right -> length(left) <= length(right) end)
+    # sortedList =
+      # listOfSolvedWords
+      # |> Enum.sort(fn left, right -> length(left) <= length(right) end)
       # |> IO.inspect()
 
 
@@ -96,37 +89,46 @@ defmodule Demo.Waffle do
     #   vw3: vw3F
     # })
 
+    firstBoard = listOfBoards |> List.first()
+
     trimLongListsBasedOnKnownWords(
       getCompleteListOfCharactersAvailableOnBoard(firstBoard),
-      listOfSolvedWords
+      mapOfFeedbacks
     )
   end
 
-  def trimLongListsBasedOnKnownWords(completeListOfLetters, listOfCandidateLists) do
-    # TODO find the list of known words
-    # TODO find the remaining letters
-    # TODO iterate through candidate lists and
-    # .  remove words if they are not achievable based on available letters
-    knownWords =
-      Enum.filter(
-        listOfCandidateLists,
-        fn list -> length(list) == 1 end # TODO optimize performance by not using length method
-      )
+  def trimLongListsBasedOnKnownWords(completeListOfLetters, mapOfFeedbacks) do
+    # find the list of known words
+    # find the remaining letters
+    # iterate through candidate lists and remove words if they are not achievable based on available letters
 
-    usedUpLetters = List.flatten(knownWords)
+    knownWordsMap =
+      Enum.filter(
+        mapOfFeedbacks,
+        fn {_k, list} -> length(list) == 1 end # PERF optimize performance by not using length method
+      ) |> Enum.into(%{})
+
+    usedUpLetters =
+      knownWordsMap
+      |> Enum.map(fn {_k, list} -> list end)
+      |> List.flatten()
+      |> Enum.map(&String.graphemes/1)
+      |> List.flatten()
     remainingLetters = completeListOfLetters -- usedUpLetters
     lengthOfTotalRemainingLetters = length(remainingLetters)
 
-    unknownWords =
+    unknownWordsMap =
       Enum.filter(
-        listOfCandidateLists,
-        fn list -> length(list) != 1 end # TODO optimize performance by not using length method
-      )
+        mapOfFeedbacks,
+        fn {_k, list} -> length(list) != 1 end # PERF optimize performance by not using length method
+        # TODO what happens when length(list) == 1 ?
+      ) |> Enum.into(%{})
 
-    trimmedUnknownWords =
+    trimmedUnknownWordsMap =
       Enum.map(
-        unknownWords,
-        fn largeListOfWords ->
+        unknownWordsMap,
+        fn {k, largeListOfWords} ->
+          {k,
           Enum.filter(
             largeListOfWords,
             fn (word) ->
@@ -135,9 +137,10 @@ defmodule Demo.Waffle do
                 remainingLetters -- thisWordsChars
                 )
             end)
-        end)
+          }
+        end) |> Enum.into(%{})
 
-    knownWords ++ trimmedUnknownWords
+    Map.merge(knownWordsMap, trimmedUnknownWordsMap)
   end
 
   def getCompleteListOfCharactersAvailableOnBoard(board) do

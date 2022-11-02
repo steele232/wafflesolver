@@ -82,7 +82,7 @@ defmodule Demo.Waffle do
     sortedList =
       listOfSolvedWords
       |> Enum.sort(fn left, right -> length(left) <= length(right) end)
-      |> IO.inspect()
+      # |> IO.inspect()
 
 
     # TODO maybe return from this function in a map like this....

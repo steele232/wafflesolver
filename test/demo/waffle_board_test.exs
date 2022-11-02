@@ -125,25 +125,76 @@ defmodule WaffleBoardTest do
 
   end
 
-  # test "test solving with accumulating boards" do
-  #   # TODO
-  #   board = %Board{
-  #     characterStrings: [
-  #       ["c", "l", "o", "t", "h"],
-  #       ["o", " ", "e", " ", "o"],
-  #       ["o", "a", "s", "a", "r"],
-  #       ["n", " ", "c", " ", "d"],
-  #       ["h", "n", "t", "l", "y"]
-  #     ],
-  #     feedbackStrings: [
-  #       ["2", "2", "2", "2", "2"],
-  #       ["2", " ", "1", " ", "0"],
-  #       ["3", "1", "2", "3", "1"],
-  #       ["0", " ", "0", " ", "2"],
-  #       ["2", "0", "2", "2", "2"]
-  #     ]
-  #   }
-  #   IO.inspect Waffle.solve([board])
-  # end
+  test "test solving with accumulating boards" do
+    # TODO
+    board1 = %Board{
+      characterStrings: [
+        ["w", "n", "i", "d", "w"],
+        ["e", " ", "d", " ", "i"],
+        ["a", "i", "i", "e", "e"],
+        ["o", " ", "f", " ", "r"],
+        ["r", "g", "c", "g", "e"]
+      ],
+      feedbackStrings: [
+        ["2", "0", "4", "1", "2"],
+        ["1", " ", "1", " ", "2"],
+        ["4", "0", "2", "1", "0"],
+        ["0", " ", "0", " ", "0"],
+        ["2", "0", "0", "2", "2"]
+      ]
+    }
+    IO.inspect Waffle.solve([board1])
+    board2 = %Board{
+      characterStrings: [
+        ["w", "e", "i", "d", "w"],
+        ["e", " ", "d", " ", "i"],
+        ["a", "i", "i", "e", "n"],
+        ["o", " ", "f", " ", "r"],
+        ["r", "g", "c", "g", "e"]
+      ],
+      feedbackStrings: [
+        ["2", "0", "4", "1", "2"],
+        ["1", " ", "1", " ", "2"],
+        ["4", "0", "2", "1", "2"],
+        ["0", " ", "0", " ", "0"],
+        ["2", "0", "0", "2", "2"]
+      ]
+    }
+    IO.inspect Waffle.solve([board1, board2])
+    board3 = %Board{
+      characterStrings: [
+        ["w", "e", "i", "d", "w"],
+        ["e", " ", "c", " ", "i"],
+        ["a", "i", "i", "e", "n"],
+        ["o", " ", "f", " ", "r"],
+        ["r", "g", "d", "g", "e"]
+      ],
+      feedbackStrings: [
+        ["2", "0", "4", "1", "2"],
+        ["1", " ", "0", " ", "2"],
+        ["4", "0", "2", "1", "2"],
+        ["0", " ", "0", " ", "0"],
+        ["2", "0", "2", "2", "2"]
+      ]
+    }
+    IO.inspect Waffle.solve([board1, board2, board3])
+    board4 = %Board{
+      characterStrings: [
+        ["w", "i", "d", "o", "w"],
+        ["a", " ", "c", " ", "i"],
+        ["f", "i", "i", "e", "n"],
+        ["e", " ", "o", " ", "r"],
+        ["r", "g", "d", "g", "e"]
+      ],
+      feedbackStrings: [
+        ["2", "2", "2", "2", "2"],
+        ["2", " ", "0", " ", "2"],
+        ["2", "4", "2", "1", "2"],
+        ["2", " ", "3", " ", "0"],
+        ["2", "0", "2", "2", "2"]
+      ]
+    }
+    IO.inspect Waffle.solve([board1, board2, board3, board4])
+  end
 
 end

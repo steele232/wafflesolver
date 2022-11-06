@@ -91,6 +91,9 @@ defmodule Demo.Waffle do
 
     firstBoard = listOfBoards |> List.first()
 
+    IO.puts("First board:")
+    IO.inspect(firstBoard)
+
     trimLongListsBasedOnKnownWords(
       getCompleteListOfCharactersAvailableOnBoard(firstBoard),
       mapOfFeedbacks
@@ -108,14 +111,19 @@ defmodule Demo.Waffle do
         fn {_k, list} -> length(list) == 1 end # PERF optimize performance by not using length method
       ) |> Enum.into(%{})
 
-    usedUpLetters =
-      knownWordsMap
-      |> Enum.map(fn {_k, list} -> list end)
-      |> List.flatten()
-      |> Enum.map(&String.graphemes/1)
-      |> List.flatten()
-    remainingLetters = completeListOfLetters -- usedUpLetters
-    lengthOfTotalRemainingLetters = length(remainingLetters)
+    # usedUpLettersMap =
+      # TODO similar to solving map because the letters are "remaining" or available to be used in a given word very much depends on what intersections that word has with other already-solved words !
+
+
+    # usedUpLetters =
+    #   knownWordsMap
+    #   |> Enum.map(fn {_k, list} -> list end)
+    #   |> List.flatten()
+    #   |> Enum.map(&String.graphemes/1)
+    #   |> List.flatten()
+    # remainingLetters = completeListOfLetters -- usedUpLetters # TODO BUG if we do it this way, then we will over-exhaust letters. Letters ARE allowed to be reused in words because of word intersections !!!
+    # lengthOfTotalRemainingLetters = length(remainingLetters)
+
 
     unknownWordsMap =
       Enum.filter(
@@ -127,14 +135,16 @@ defmodule Demo.Waffle do
     trimmedUnknownWordsMap =
       Enum.map(
         unknownWordsMap,
-        fn {k, largeListOfWords} ->
-          {k,
+        fn {wordIdentifier, largeListOfWords} ->
+          {wordIdentifier,
           Enum.filter(
             largeListOfWords,
             fn (word) ->
+              charsAvailableForThisWord = getCharsAvailableForThisWord(wordIdentifier, knownWordsMap, completeListOfLetters)
+              lengthOfCharsAvailableForThisWord = length(charsAvailableForThisWord)
               thisWordsChars = word |> String.graphemes()
-              (lengthOfTotalRemainingLetters - 5) == length(
-                remainingLetters -- thisWordsChars
+              (lengthOfCharsAvailableForThisWord - 5) == length(
+                charsAvailableForThisWord -- thisWordsChars
                 )
             end)
           }
@@ -148,4 +158,74 @@ defmodule Demo.Waffle do
     |> List.flatten()
     |> Enum.filter(&(&1 != " "))
   end
+
+  @spec getCharsAvailableForThisWord(:hw1 | :hw2 | :hw3 | :vw1 | :vw2 | :vw3, map, [binary]) :: [binary]
+  def getCharsAvailableForThisWord(wordIdentifier, knownWordsMap, completeListOfLetters) do
+
+    # almost called this val: intersectingCharsThatAreKnownAndIDontWantToMarkAsBeingUsedUpDespiteTheirBeingUsedInAKnownWord =
+    knownIntersections =
+      case wordIdentifier do
+        :hw1 ->
+          [
+          getChar(knownWordsMap, :vw1, 1),
+          getChar(knownWordsMap, :vw2, 1),
+          getChar(knownWordsMap, :vw3, 1)
+          ] |> List.flatten()
+        :hw2 ->
+          [
+          getChar(knownWordsMap, :vw1, 3),
+          getChar(knownWordsMap, :vw2, 3),
+          getChar(knownWordsMap, :vw3, 3)
+          ] |> List.flatten()
+        :hw3 ->
+          [
+          getChar(knownWordsMap, :vw1, 5),
+          getChar(knownWordsMap, :vw2, 5),
+          getChar(knownWordsMap, :vw3, 5)
+          ] |> List.flatten()
+        :vw1 ->
+          [
+          getChar(knownWordsMap, :hw1, 1),
+          getChar(knownWordsMap, :hw2, 1),
+          getChar(knownWordsMap, :hw3, 1)
+          ] |> List.flatten()
+        :vw2 ->
+          [
+          getChar(knownWordsMap, :hw1, 3),
+          getChar(knownWordsMap, :hw2, 3),
+          getChar(knownWordsMap, :hw3, 3)
+          ] |> List.flatten()
+        :vw3 ->
+          [
+          getChar(knownWordsMap, :hw1, 5),
+          getChar(knownWordsMap, :hw2, 5),
+          getChar(knownWordsMap, :hw3, 5)
+          ] |> List.flatten()
+      end
+
+    usedUpLetters =
+      knownWordsMap
+      |> Enum.map(fn {_k, list} -> list end)
+      |> List.flatten()
+      |> Enum.map(&String.graphemes/1)
+      |> List.flatten()
+    remainingLetters = completeListOfLetters -- usedUpLetters
+    availableLetters = remainingLetters ++ knownIntersections
+    availableLetters
+  end
+
+  @spec getChar(map, atom, integer) :: [binary]
+  def getChar(knownWordMap, wordIdentifier, n) do
+    case Map.has_key?(knownWordMap, wordIdentifier) do
+      true ->
+        %{^wordIdentifier => [word]} = knownWordMap
+        chars = word |> String.graphemes()
+        [
+          :lists.nth(n, chars)
+        ]
+      false ->
+        [] # this will be List.flatten'ed in the usage
+    end
+  end
+
 end

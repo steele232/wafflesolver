@@ -115,21 +115,18 @@ defmodule WaffleBoardTest do
 
     # IO.inspect Waffle.solve([board])
 
-    # TODO see if this can be improved? But I think this is amazing..
-
     assert Waffle.solve([board]) == %{
       hw1: ["yucca"],
-      hw2: ["whale"],
+      hw2: ["awake"], #  used to be "whale" but I fixed a bug
       hw3: ["naked"],
       vw1: ["yearn"],
-      vw2: [], # TODO used to be these ?? maybe not on this specific word.. ["chalk", "clack", "crack", "whack", "wrack"],
-      vw3: []  # TODO used to be these ?? maybe not on this specific word.. ["ached", "ahead", "amend", "arced", "armed"]
+      vw2: ["chalk"], # used to be [] bug I fixed a bug
+      vw3: ["ahead"]  # used to be [] but I fixed a bug
     }
   end
-  # TODO why did some of the above words come back empty on this one? Is my algorithm too aggressive? I would love to know what the actual word was on this one? I should record that in my future examples so that I can continue to maintain the tests; right now, it is very hard to maintain the tests without the feedback oracle ... (the real game website)
 
   test "test solving with accumulating boards" do
-    # TODO
+    # TODO make an assertion for this
     board1 = %Board{
       characterStrings: [
         ["w", "n", "i", "d", "w"],
@@ -356,7 +353,7 @@ defmodule WaffleBoardTest do
       ]
     }
     IO.inspect Waffle.solve([board1, board2, board3, board4, board5, board6])
-    # TODO a bug found
+    # TODO a bug found -- # TODO this is probably fixed now
     brokeMyselfEventually = %{
       hw1: ["leapt"],
       hw2: [],

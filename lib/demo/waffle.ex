@@ -235,6 +235,9 @@ defmodule Demo.Waffle do
     fitsRemainingLetters =
       lengthOfCharsAvailableForThisWord - 5 == length(availableLettersList -- thisWordsChars)
 
+
+
+
     # THEN check if word matches knownIntersections...
     fitsKnownIntersections =
       Enum.all?(

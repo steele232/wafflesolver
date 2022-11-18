@@ -116,5 +116,16 @@ defmodule WordleTest do
     assert f3 == expectedFeedback
   end
 
+  test "solve based on my module hacking here.." do
+    expectedWords = ["fault"]
+    f1 = Feedback.fromStrings("aegis", "10000")
+    f2 = Feedback.fromStrings("quart", "01102")
+    f3 = Feedback.fromStrings("jaunt", "02202")
+    f4 = Feedback.fromStrings("vault", "45555")
+    foundWords = Wordle.solve([f1, f2, f3, f4])
+    IO.inspect("Hacking Wordle module..")
+    IO.inspect(foundWords)
+    assert expectedWords == foundWords
+  end
 
 end

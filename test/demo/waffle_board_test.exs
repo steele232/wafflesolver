@@ -960,4 +960,83 @@ defmodule WaffleBoardTest do
     # cycles without repeated letters are easy-ish to identify and they have basically one worst/best solution
 
   end
+  test "test 2022 Nov 18 #301 waffle first round" do
+    board1 = %Board{
+      characterStrings: [
+        ["w", "c", "x", "l", "e"],
+        ["t", " ", "a", " ", "r"],
+        ["h", "h", "g", "i", "e"],
+        ["t", " ", "y", " ", "i"],
+        ["h", "r", "n", "e", "a"]
+      ],
+      feedbackStrings: [
+        ["2", "0", "0", "0", "2"],
+        ["1", " ", "2", " ", "1"],
+        ["4", "1", "2", "1", "0"],
+        ["0", " ", "0", " ", "0"],
+        ["2", "0", "4", "1", "2"]
+      ]
+    }
+    IO.inspect Waffle.solve([board1])
+    foundImmediately = %{
+      hw1: ["where"],
+      hw2: ["tight"],
+      hw3: ["hyena"],
+      vw1: ["witch"],
+      vw2: [], # OOF - also I had mistyped this somehow .. ?
+      vw3: ["extra"]
+    }
+    board2 = %Board{
+      characterStrings: [
+        ["w", "c", "x", "l", "e"],
+        ["h", " ", "a", " ", "r"],
+        ["t", "h", "g", "i", "e"],
+        ["t", " ", "y", " ", "i"],
+        ["h", "r", "n", "e", "a"]
+      ],
+      feedbackStrings: [
+        ["2", "0", "0", "0", "2"],
+        ["0", " ", "2", " ", "1"],
+        ["2", "1", "2", "1", "0"],
+        ["0", " ", "0", " ", "0"],
+        ["2", "0", "4", "1", "2"]
+      ]
+    }
+    IO.inspect Waffle.solve([board1, board2])
+    foundNext = %{
+      hw1: ["where", "white", "withe", "write"],
+      hw2: [],
+      hw3: ["hyena"],
+      vw1: ["witch"],
+      vw2: [],
+      vw3: ["extra"]
+    }
+    board3 = %Board{
+      characterStrings: [
+        ["w", "c", "x", "l", "e"],
+        ["h", " ", "a", " ", "r"],
+        ["t", "i", "g", "h", "e"],
+        ["t", " ", "y", " ", "i"],
+        ["h", "r", "n", "e", "a"]
+      ],
+      feedbackStrings: [
+        ["2", "0", "0", "0", "2"],
+        ["0", " ", "2", " ", "1"],
+        ["2", "2", "2", "2", "0"],
+        ["0", " ", "0", " ", "0"],
+        ["2", "0", "4", "1", "2"]
+      ]
+    }
+    IO.inspect Waffle.solve([board1, board2, board3])
+    foundNext = %{
+      hw1: ["where"],
+      hw2: ["tight"],
+      hw3: ["hyena"],
+      vw1: ["witch"],
+      vw2: [], # OOF it was "eagle"
+      vw3: ["extra"]
+    }
+
+  end
+
 end

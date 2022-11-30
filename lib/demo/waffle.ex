@@ -3,6 +3,14 @@ defmodule Demo.Waffle do
   alias Demo.Wordle.Feedback
   alias Demo.Wordle
 
+  @spec solve(list(Board)) :: %{
+          hw1: [binary()],
+          hw2: [binary()],
+          hw3: [binary()],
+          vw1: [binary()],
+          vw2: [binary()],
+          vw3: [binary()]
+        }
   def solve(listOfBoards) do
     # TODO find the most solved word.. and then go from there
     # .  preliminary Wordle solving should not be too hard
@@ -89,13 +97,19 @@ defmodule Demo.Waffle do
     # })
 
     lastBoard = listOfBoards |> List.last()
+    firstBoard = listOfBoards |> List.first()
 
     IO.puts("Last board:")
     IO.inspect(lastBoard)
 
-    trimLongListsBasedOnKnownWords(
-      getCompleteListOfCharactersAvailableOnBoard(lastBoard),
+    trimmedMap = trimLongListsBasedOnKnownWords(
+      getCompleteListOfCharactersAvailableOnBoard(firstBoard),
       mapOfFeedbacks
+    )
+
+    exhaustiveCombinationSearchOnTrimmedResults(
+      trimmedMap,
+      getCompleteListOfCharactersAvailableOnBoard(firstBoard)
     )
   end
 
@@ -275,4 +289,51 @@ defmodule Demo.Waffle do
         []
     end
   end
+
+  @spec exhaustiveCombinationSearchOnTrimmedResults(
+    %{hw1: list, hw2: list, hw3: list, vw1: list, vw2: list, vw3: list },
+      list(binary)
+    ) :: %{ hw1: [binary()], hw2: [binary()], hw3: [binary()], vw1: [binary()], vw2: [binary()], vw3: [binary()] }
+  def exhaustiveCombinationSearchOnTrimmedResults(
+    trimmedMap,
+    listOfCharactersAvailableOnBoard
+  ) do
+
+    # first just count how many combinations there should be
+    IO.puts "Num Possible Combinations"
+    numCombos = Enum.map(trimmedMap, fn {_k,v} -> length(v) end)
+    |> IO.inspect
+    |> Enum.reduce(0, fn accum, elem ->
+      cond do
+        elem > 1 -> accum * elem
+        true -> accum
+      end
+    end )
+    IO.inspect(numCombos)
+
+    # TODO DECIDE what to do when an empty list is passed in for one of the words
+      # THROW / QUIT for now...
+
+    # TODO try to find all possible combinations ...
+      # I am... not sure about this... I need to generate and traverse a tree basically and then return a list of possible boards ...
+
+    # TODO try to check each combination...
+
+    # TODO return only a valid result...
+
+
+
+    # TODO return trimmedMap if all else fails
+    # trimmedMap
+
+    %{
+      hw1: ["chore", "chose"],
+      hw2: ["menus", "minus"],
+      hw3: ["thine", "three", "throe"], # by the (below) same logic, "owner", we narrow this down to "throe" and "three" which have the same intersection characters, so then we rely on letters-available counting which I've had a hard time with and exhaustive search should fix that.
+      vw1: ["comet"],
+      vw2: ["hones", "owner"], # I could try to show that "owner" is correct here because the only hw1 possibilities have "o" as a center letter but I think the "try-all-possibilities" approach is more exhaustive and I think the possibilities will have been eliminated enough by this point that this should be computationally fine.
+      vw3: ["ensue"]
+    }
+  end
+
 end

@@ -960,6 +960,7 @@ defmodule WaffleBoardTest do
     # cycles without repeated letters are easy-ish to identify and they have basically one worst/best solution
 
   end
+
   test "test 2022 Nov 18 #301 waffle first round" do
     board1 = %Board{
       characterStrings: [
@@ -1036,6 +1037,46 @@ defmodule WaffleBoardTest do
       vw2: [], # OOF it was "eagle"
       vw3: ["extra"]
     }
+
+  end
+
+  test "test 2022 Nov 30 #313 waffle first round" do
+    board1 = %Board{
+      characterStrings: [
+        ["c", "o", "n", "i", "e"],
+        ["w", " ", "e", " ", "r"],
+        ["m", "u", "n", "r", "u"],
+        ["h", " ", "o", " ", "e"],
+        ["t", "h", "e", "s", "e"]
+      ],
+      feedbackStrings: [
+        ["2", "1", "0", "0", "2"],
+        ["0", " ", "1", " ", "0"],
+        ["2", "1", "2", "0", "4"],
+        ["0", " ", "1", " ", "0"],
+        ["2", "2", "4", "0", "2"]
+      ]
+    }
+    foundImmediately = Waffle.solve([board1])
+    IO.inspect foundImmediately
+    assert foundImmediately == %{
+      hw1: ["chore", "chose"],
+      hw2: ["menus", "minus"],
+      hw3: ["thine", "three", "throe"],
+      vw1: ["comet"],
+      vw2: ["hones", "owner"],
+      vw3: ["ensue"]
+    }
+    # Sweet this is a good example to do for finding all possible examples ...
+    shouldFind = %{
+      hw1: ["chore", "chose"],
+      hw2: ["menus", "minus"],
+      hw3: ["thine", "three", "throe"], # by the (below) same logic, "owner", we narrow this down to "throe" and "three" which have the same intersection characters, so then we rely on letters-available counting which I've had a hard time with and exhaustive search should fix that.
+      vw1: ["comet"],
+      vw2: ["hones", "owner"], # I could try to show that "owner" is correct here because the only hw1 possibilities have "o" as a center letter but I think the "try-all-possibilities" approach is more exhaustive and I think the possibilities will have been eliminated enough by this point that this should be computationally fine.
+      vw3: ["ensue"]
+    }
+
 
   end
 

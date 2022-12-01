@@ -1080,4 +1080,38 @@ defmodule WaffleBoardTest do
 
   end
 
+  test "test 2022 Dec 1 #314 waffle first round" do
+    board1 = %Board{
+      characterStrings: [
+        ["p", "t", "r", "r", "o"],
+        ["a", " ", "i", " ", "e"],
+        ["i", "d", "e", "p", "a"],
+        ["e", " ", "d", " ", "l"],
+        ["r", "l", "n", "l", "y"]
+      ],
+      feedbackStrings: [
+        ["2", "0", "4", "0", "2"],
+        ["0", " ", "0", " ", "0"],
+        ["4", "1", "2", "1", "4"],
+        ["2", " ", "0", " ", "2"],
+        ["2", "0", "0", "0", "2"]
+      ]
+    }
+    foundImmediately = Waffle.solve([board1])
+    IO.inspect foundImmediately
+    assert foundImmediately == %{
+      hw1: ["piano"],
+      hw2: ["plead"],
+      hw3: ["repay", "retry"], # "retry" for sure"
+      vw1: ["peter", "piper"], # umm.. I will let the computer find this for me.
+      vw2: ["alert", "pleat"], # umm.. I will let the computer find this for me.
+      vw3: ["oddly"]
+    }
+    # Sweet this is a good example to do for finding all possible examples ...
+    shouldFind = %{
+    }
+
+
+  end
+
 end

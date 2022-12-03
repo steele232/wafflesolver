@@ -1059,25 +1059,15 @@ defmodule WaffleBoardTest do
     }
     foundImmediately = Waffle.solve([board1])
     IO.inspect foundImmediately
-    assert foundImmediately == %{
-      hw1: ["chore", "chose"],
-      hw2: ["menus", "minus"],
-      hw3: ["thine", "three", "throe"],
-      vw1: ["comet"],
-      vw2: ["hones", "owner"],
-      vw3: ["ensue"]
-    }
     # Sweet this is a good example to do for finding all possible examples ...
-    shouldFind = %{
-      hw1: ["chore", "chose"],
-      hw2: ["menus", "minus"],
-      hw3: ["thine", "three", "throe"], # by the (below) same logic, "owner", we narrow this down to "throe" and "three" which have the same intersection characters, so then we rely on letters-available counting which I've had a hard time with and exhaustive search should fix that.
+    assert foundImmediately == [%{
+      hw1: ["chore"],
+      hw2: ["minus"],
+      hw3: ["three"],
       vw1: ["comet"],
-      vw2: ["hones", "owner"], # I could try to show that "owner" is correct here because the only hw1 possibilities have "o" as a center letter but I think the "try-all-possibilities" approach is more exhaustive and I think the possibilities will have been eliminated enough by this point that this should be computationally fine.
+      vw2: ["owner"],
       vw3: ["ensue"]
-    }
-
-
+    }]
   end
 
   test "test 2022 Dec 1 #314 waffle first round" do

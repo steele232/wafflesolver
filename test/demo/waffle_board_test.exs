@@ -115,86 +115,14 @@ defmodule WaffleBoardTest do
 
     # IO.inspect Waffle.solve([board])
 
-    assert Waffle.solve([board]) == %{
+    assert Waffle.solve([board]) == [%{
       hw1: ["yucca"],
       hw2: ["awake"], #  used to be "whale" but I fixed a bug
       hw3: ["naked"],
       vw1: ["yearn"],
       vw2: ["chalk"], # used to be [] bug I fixed a bug
       vw3: ["ahead"]  # used to be [] but I fixed a bug
-    }
-  end
-
-  test "test solving with accumulating boards" do
-    # TODO make an assertion for this
-    board1 = %Board{
-      characterStrings: [
-        ["w", "n", "i", "d", "w"],
-        ["e", " ", "d", " ", "i"],
-        ["a", "i", "i", "e", "e"],
-        ["o", " ", "f", " ", "r"],
-        ["r", "g", "c", "g", "e"]
-      ],
-      feedbackStrings: [
-        ["2", "0", "4", "1", "2"],
-        ["1", " ", "1", " ", "2"],
-        ["4", "0", "2", "1", "0"],
-        ["0", " ", "0", " ", "0"],
-        ["2", "0", "0", "2", "2"]
-      ]
-    }
-    IO.inspect Waffle.solve([board1])
-    board2 = %Board{
-      characterStrings: [
-        ["w", "e", "i", "d", "w"],
-        ["e", " ", "d", " ", "i"],
-        ["a", "i", "i", "e", "n"],
-        ["o", " ", "f", " ", "r"],
-        ["r", "g", "c", "g", "e"]
-      ],
-      feedbackStrings: [
-        ["2", "0", "4", "1", "2"],
-        ["1", " ", "1", " ", "2"],
-        ["4", "0", "2", "1", "2"],
-        ["0", " ", "0", " ", "0"],
-        ["2", "0", "0", "2", "2"]
-      ]
-    }
-    IO.inspect Waffle.solve([board1, board2])
-    board3 = %Board{
-      characterStrings: [
-        ["w", "e", "i", "d", "w"],
-        ["e", " ", "c", " ", "i"],
-        ["a", "i", "i", "e", "n"],
-        ["o", " ", "f", " ", "r"],
-        ["r", "g", "d", "g", "e"]
-      ],
-      feedbackStrings: [
-        ["2", "0", "4", "1", "2"],
-        ["1", " ", "0", " ", "2"],
-        ["4", "0", "2", "1", "2"],
-        ["0", " ", "0", " ", "0"],
-        ["2", "0", "2", "2", "2"]
-      ]
-    }
-    IO.inspect Waffle.solve([board1, board2, board3])
-    board4 = %Board{
-      characterStrings: [
-        ["w", "i", "d", "o", "w"],
-        ["a", " ", "c", " ", "i"],
-        ["f", "i", "i", "e", "n"],
-        ["e", " ", "o", " ", "r"],
-        ["r", "g", "d", "g", "e"]
-      ],
-      feedbackStrings: [
-        ["2", "2", "2", "2", "2"],
-        ["2", " ", "0", " ", "2"],
-        ["2", "4", "2", "1", "2"],
-        ["2", " ", "3", " ", "0"],
-        ["2", "0", "2", "2", "2"]
-      ]
-    }
-    IO.inspect Waffle.solve([board1, board2, board3, board4])
+    }]
   end
 
   test "test 2022 Nov 7 waffle first round" do
@@ -214,7 +142,18 @@ defmodule WaffleBoardTest do
         ["2", "1", "0", "1", "2"]
       ]
     }
-    IO.inspect Waffle.solve([board1])
+    board1Result = Waffle.solve([board1])
+    IO.inspect board1
+    assert board1 == [
+      %{
+        hw1: ["glint"],
+        hw2: ["moose"],
+        hw3: ["tryst"],
+        vw1: ["gamut"],
+        vw2: ["ivory"],
+        vw3: ["theft"] # ??? !^
+      }
+    ]
     # TODO why did I get "theft" ?? There is no "h" on the board???
     board2 = %Board{
       characterStrings: [
@@ -227,9 +166,9 @@ defmodule WaffleBoardTest do
       feedbackStrings: [
         ["2", "1", "0", "1", "2"],
         ["2", " ", "2", " ", "0"],
-        ["2", "2", "2", "2", "2"],
+        ["2", "0", "2", "0", "2"],
         ["2", " ", "2", " ", "1"],
-        ["2", "2", "2", "2", "2"]
+        ["2", "1", "0", "1", "2"]
       ]
     }
     IO.inspect Waffle.solve([board2])
@@ -254,6 +193,7 @@ defmodule WaffleBoardTest do
       ]
     }
     IO.inspect Waffle.solve([board1])
+
     board2 = %Board{
       characterStrings: [
         ["l", "e", "a", "m", "t"],
@@ -270,7 +210,26 @@ defmodule WaffleBoardTest do
         ["2", "0", "4", "0", "2"]
       ]
     }
-    IO.inspect Waffle.solve([board1, board2])
+    IO.inspect
+    boardResults1 = Waffle.solve([board1, board2])
+    [
+      %{
+        hw1: ["leapt"],
+        hw2: ["meter"],
+        hw3: ["throw"],
+        vw1: ["licit"], # TODO how it possible for this and the next one to be possible answers!!!
+        vw2: ["actor"],
+        vw3: ["threw"]
+      },
+      %{
+        hw1: ["leapt"],
+        hw2: ["meter"],
+        hw3: ["throw"],
+        vw1: ["limit"],
+        vw2: ["actor"],
+        vw3: ["threw"]
+      }
+    ]
     # NOTE We should know be doubly sure about
     # leapt and actor. all others probably unchanged..
     board3 = %Board{
@@ -1089,19 +1048,63 @@ defmodule WaffleBoardTest do
     }
     foundImmediately = Waffle.solve([board1])
     IO.inspect foundImmediately
-    assert foundImmediately == %{
+    # assert foundImmediately == %{
+    #   hw1: ["piano"],
+    #   hw2: ["plead"],
+    #   hw3: ["repay", "retry"], # "retry" for sure"
+    #   vw1: ["peter", "piper"], # umm.. I will let the computer find this for me.
+    #   vw2: ["alert", "pleat"], # umm.. I will let the computer find this for me.
+    #   vw3: ["oddly"]
+    # }
+    # Sweet this is a good example to do for finding all possible examples ...
+    assert foundImmediately == [%{
       hw1: ["piano"],
       hw2: ["plead"],
-      hw3: ["repay", "retry"], # "retry" for sure"
-      vw1: ["peter", "piper"], # umm.. I will let the computer find this for me.
-      vw2: ["alert", "pleat"], # umm.. I will let the computer find this for me.
+      hw3: ["retry"],
+      vw1: ["piper"],
+      vw2: ["alert"],
       vw3: ["oddly"]
-    }
-    # Sweet this is a good example to do for finding all possible examples ...
-    shouldFind = %{
-    }
-
+    }]
 
   end
 
+  test "test 2022 Dec 20 #334 waffle first round" do
+    board1 = %Board{
+      characterStrings: [
+        ["m", "a", "l", "r", "a"],
+        ["n", " ", "i", " ", "a"],
+        ["e", "l", "v", "n", "a"],
+        ["v", " ", "a", " ", "u"],
+        ["c", "i", "e", "e", "y"]
+      ],
+      feedbackStrings: [
+        ["2", "2", "0", "0", "2"],
+        ["1", " ", "0", " ", "1"],
+        ["4", "1", "2", "1", "4"],
+        ["0", " ", "0", " ", "0"],
+        ["2", "0", "4", "0", "2"]
+      ]
+    }
+    foundImmediately = Waffle.solve([board1])
+    IO.inspect foundImmediately
+    assert foundImmediately == [
+      %{
+        hw1: ["mania"],
+        hw2: ["naval"],
+        hw3: ["curvy"],
+        vw1: ["manic"],
+        vw2: ["never"],
+        vw3: ["alley"]
+      },
+      %{
+        hw1: ["mania"],
+        hw2: ["navel"],
+        hw3: ["curvy"],
+        vw1: ["manic"],
+        vw2: ["never"],
+        vw3: ["allay"]
+      }
+    ]
+
+  end
 end

@@ -3,14 +3,14 @@ defmodule Demo.Waffle do
   alias Demo.Wordle.Feedback
   alias Demo.Wordle
 
-  @spec solve(list(Board)) :: %{
+  @spec solve(list(Board)) :: list(%{
           hw1: [binary()],
           hw2: [binary()],
           hw3: [binary()],
           vw1: [binary()],
           vw2: [binary()],
           vw3: [binary()]
-        }
+        })
   def solve(listOfBoards) do
     # TODO find the most solved word.. and then go from there
     # .  preliminary Wordle solving should not be too hard
@@ -108,10 +108,16 @@ defmodule Demo.Waffle do
         mapOfFeedbacks
       )
 
-    exhaustiveCombinationSearchOnTrimmedResults(
+    exhaustiveSearch = exhaustiveCombinationSearchOnTrimmedResults(
       trimmedMap,
       getCompleteListOfCharactersAvailableOnBoard(firstBoard)
     )
+    # fall back to earlier trimmed list if exhaustive list doesn't give the right result ....
+    #    TODO or determine if this is just a bad hack.... IDK.
+    case exhaustiveSearch do
+      [] -> [trimmedMap] #needs to be a list because that's what exhaustive search gives..
+      _combinationSearchFoundSomething -> exhaustiveSearch
+    end
   end
 
   def trimLongListsBasedOnKnownWords(completeListOfLetters, mapOfFeedbacks) do
@@ -308,7 +314,7 @@ defmodule Demo.Waffle do
 
     numCombos =
       Enum.map(trimmedMap, fn {_k, v} -> length(v) end)
-      |> IO.inspect()
+      # |> IO.inspect()
       |> Enum.reduce(0, fn accum, elem ->
         cond do
           elem > 1 -> accum * elem
@@ -385,10 +391,11 @@ defmodule Demo.Waffle do
           |> List.flatten()
           # |> IO.inspect()
 
-        IO.puts("Length of combinations is ..")
-        length(generatedCombinations) |> IO.inspect()
-        # TODO yay!! I think I got all the possible combinations !!!!
-        # So now I just need to write a method that checks all of them and then we are 3 lines away from a very accurate answer !!!
+        # IO.puts("Length of combinations is ..")
+        length(generatedCombinations)
+        # |> IO.inspect()
+
+        # check all of the generated possible combinations
         generatedCombinations
         |> Enum.filter(fn combination -> checkPossibleBoard(combination, listOfCharactersAvailableOnBoard) end)
         # returns list of possible answers :)
@@ -452,6 +459,8 @@ defmodule Demo.Waffle do
       String.graphemes(hw2),
       [String.at(vw1, 3), String.at(vw2, 3), String.at(vw3, 3)], # 4th row
       String.graphemes(hw3)
-    ]) |> IO.inspect()))
+    ])
+    # |> IO.inspect()
+    ))
   end
 end

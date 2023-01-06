@@ -1,0 +1,14 @@
+<section class="phx-hero">
+  <h1><%= gettext "Welcome to %{name}!", name: "Waffle Solver" %></h1>
+  <p>Peace of mind from prototype to production</p>
+</section>
+
+<section class="row">
+  <article class="column">
+    <h1>Hello there Column</h1>
+    <%= form_for @conn, Routes.game_mvc_path(@conn, :solved), fn f ->  %>
+      <%= text_input f, :firstword %>
+      <%= submit "Solve" %>
+    <% end %>
+  </article>
+</section>

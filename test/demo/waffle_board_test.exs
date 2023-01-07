@@ -1113,4 +1113,48 @@ defmodule WaffleBoardTest do
     ]
 
   end
+
+  test "test 2023 Jan 6 #351 waffle first round" do
+    board1 = %Board{
+      characterStrings: [
+        ["g", "r", "n", "o", "h"],
+        ["p", " ", "h", " ", "s"],
+        ["a", "r", "h", "s", "u"], # oh i did originally typo the "s" and made it a "d" on accident
+        ["t", " ", "e", " ", "e"],
+        ["l", "g", "u", "o", "e"]
+      ],
+      feedbackStrings: [
+        ["2", "2", "4", "0", "2"],
+        ["0", " ", "0", " ", "1"],
+        ["0", "1", "2", "0", "0"],
+        ["0", " ", "2", " ", "0"],
+        ["2", "1", "4", "0", "2"]
+      ]
+    }
+
+    foundImmediately = Waffle.solve([board1])
+    IO.inspect foundImmediately
+    # TODO this is an interesting bug
+    assert foundImmediately == [
+      %{
+        hw1: ["graph"],
+        hw2: ["other"],
+        hw3: ["lunge"],
+        vw1: ["ghoul"],
+        vw2: ["ashen"],
+        vw3: ["horse"]
+      },
+      # %{
+      #   hw1: ["graph"],
+      #   hw2: ["other"],
+      #   hw3: ["lunge"],
+      #   vw1: ["ghoul"],
+      #   vw2: ["ashes"], # NOTE ashes vs ashen
+      #   vw3: ["horse"]
+      # }
+    ]
+
+  end
+
+
 end

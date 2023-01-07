@@ -83,6 +83,12 @@ defmodule WaffleBoardTest do
         ["2", "0", "2", "0", "2"]
       ]
     }
+    assert "y" == Board.charIdx(board, 1, 1)
+    assert "a" == Board.charIdx(board, 2, 1)
+    assert "w" == Board.charIdx(board, 3, 1)
+    assert "e" == Board.charIdx(board, 1, 2)
+    assert "h" == Board.charIdx(board, 1, 3)
+    assert "r" == Board.charIdx(board, 1, 4)
     # IO.inspect(board)
     assert "yehra" ==
       Board.getHorizontalWord(board, 1)

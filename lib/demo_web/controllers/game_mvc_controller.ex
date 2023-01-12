@@ -73,6 +73,10 @@ defmodule DemoWeb.GameMvcController do
     solutions = Waffle.solve([submittedBoard])
     IO.inspect("dunbinsolved")
     IO.inspect solutions
-    render(conn, "solved.html", params)
+    solutionsString = Kernel.inspect(solutions)
+    render(conn, "solved.html", %{
+      solved_term_to_string: solutionsString,
+      solutions: solutions
+      })
   end
 end

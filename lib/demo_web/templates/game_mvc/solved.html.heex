@@ -5,5 +5,46 @@
 
 <section class="row">
   <article class="column">
+    <%= for solution <- @solutions do %>
+      <div>
+        <span>Horizontal Word(s) One: </span>
+        <span>
+          <%= solution.hw1 |> Kernel.inspect %>
+        </span>
+      </div>
+      <div>
+        <span>Horizontal Word(s) Two: </span>
+        <span>
+          <%= solution.hw2 |> Kernel.inspect %>
+        </span>
+      </div>
+      <div>
+        <span>Horizontal Word(s) Three: </span>
+        <span>
+          <%= solution.hw3 |> Kernel.inspect %>
+        </span>
+      </div>
+      <div>
+        <span>Vertical Word(s) One: </span>
+        <span>
+          <%= solution.vw1 |> Kernel.inspect %>
+        </span>
+      </div>
+      <div>
+        <span>Vertical Word(s) Two: </span>
+        <span>
+          <%= solution.vw2 |> Kernel.inspect %>
+        </span>
+      </div>
+      <div>
+        <span>Vertical Word(s) Three: </span>
+        <span>
+          <%= solution.vw3 |> Kernel.inspect %>
+        </span>
+      </div>
+    <% end %>
+  </article>
+  <article class="column">
+    <%= @solved_term_to_string %>
   </article>
 </section>

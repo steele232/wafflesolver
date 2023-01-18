@@ -22,8 +22,15 @@ Ready to run in production? Please [check our deployment guides](https://hexdocs
 
   * Initial Data Entry
   * Uncapitalize all input-letters
-  * 
+  * Limit input fields to one single character
   * Show Options
   * Select Assumptions (Optional?)
   * Show Swap Recommendation Path
+  * BOARD STATE MANAGEMENT
+    * HOST the state in the top component
+    * show FEEDBACK based on that component
+    * toggle FEEDBACK based on that component
+    * updated CHARACTERS based on user input
+    * Final submission for Solving !
+      * Translate color to number; user data to solver
 

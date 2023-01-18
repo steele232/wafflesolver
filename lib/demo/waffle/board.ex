@@ -38,6 +38,15 @@ defmodule Demo.Waffle.Board do
     :lists.nth(j, inner)
   end
 
+  # TODO specify this more. and .. try to handle errors more?
+  @spec getIndicesFromString(binary) :: %{horizontal: binary, vertical: binary}
+  def getIndicesFromString(str) do
+    letters = str |> String.graphemes
+    verticalIdx = :lists.nth(2, letters)
+    horizontalIdx = :lists.nth(4, letters)
+    %{vertical: verticalIdx, horizontal: horizontalIdx}
+  end
+
   @doc """
   wordIdx takes numbers 1-3 as indices
   wordIdx is from top-left

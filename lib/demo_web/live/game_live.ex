@@ -18,4 +18,8 @@ defmodule DemoWeb.GameLive do
   def handle_event("dec_iteration", _value, socket) do
     {:noreply, assign(socket, :iteration, -1 + socket.assigns.iteration)}
   end
+  def handle_event("update_feedback", %{"toggle" => board_entry_key}, socket) do
+    IO.inspect board_entry_key
+    {:noreply, assign(socket, :iteration, 1 + socket.assigns.iteration)}
+  end
 end

@@ -1,37 +1,119 @@
-<section class="phx-hero">
-  <h1><%= gettext "Welcome to %{name}!", name: "Waffle Solver" %></h1>
-  <p>Take the fun out of Sibling Rivalries</p>
-  <p>Try out the game below!</p>
-</section>
-
-
-<section class="row">
-  <h3> Number: <%= @iteration %> </h3>
+<section class="section">
+  <h3 class="title"> Number: <%= @iteration %>
+  </h3>
   <button phx-click="inc_iteration">+</button>
   <button phx-click="dec_iteration">-</button>
 </section>
 
-<section>
-  <h3>Waffle Board Form</h3>
-  <div class="form-group">
-    <div class="row">
-      <div class="col-xs-2">
-        <input type="text" name="v1h1" id="v1h1" placeholder="v1h1" class="form-control">
+<section class="section">
+  <h3 class="title">Initial Waffle Board Form</h3>
+  <!-- TODO Bulma Tiling for the inputs ... -->
+  <div class="tile is-ancestor is-vertical">
+    <div class="tile is-parent">
+      <div class="tile is-child is-one box">
+        <input type="text" name="v1h1" id="v1h1" placeholder="v1h1" class="input">
+        <button class="button is-success">Feedback</button>
       </div>
-      <div class="col-xs-2">
-        <input type="text" name="v1h2" id="v1h2" placeholder="v1h2" class="form-control">
+      <div class="tile is-child is-one box">
+        <input type="text" name="v1h2" id="v1h2" placeholder="v1h2" class="input">
+        <button class="button is-success">Feedback</button>
       </div>
-      <div class="col-xs-2">
-        <input type="text" name="v1h3" id="v1h3" placeholder="v1h3" class="form-control">
+      <div class="tile is-child is-one box">
+        <input type="text" name="v1h3" id="v1h3" placeholder="v1h3" class="input">
+        <button class="button is-success">Feedback</button>
       </div>
-      <div class="col-xs-2">
-        <input type="text" name="v1h4" id="v1h4" placeholder="v1h4" class="form-control">
+      <div class="tile is-child is-one box">
+        <input type="text" name="v1h4" id="v1h4" placeholder="v1h4" class="input">
+        <button class="button is-success">Feedback</button>
       </div>
-      <div class="col-xs-2">
-        <input type="text" name="v1h5" id="v1h5" placeholder="v1h5" class="form-control">
+      <div class="tile is-child is-one box">
+        <input type="text" name="v1h5" id="v1h5" placeholder="v1h5" class="input">
+        <button class="button is-success">Feedback</button>
       </div>
     </div>
-
+    <div class="tile is-parent">
+      <div class="tile is-child is-one box">
+        <input type="text" name="v1h1" id="v1h1" placeholder="v1h1" class="input">
+        <button class="button is-success">Feedback</button>
+      </div>
+      <div class="tile is-child is-one box">
+        <!-- <input type="text" name="v1h2" id="v1h2" placeholder="v1h2" class="input"> -->
+      </div>
+      <div class="tile is-child is-one box">
+        <input type="text" name="v1h3" id="v1h3" placeholder="v1h3" class="input">
+        <button class="button is-success">Feedback</button>
+      </div>
+      <div class="tile is-child is-one box">
+        <!-- <input type="text" name="v1h4" id="v1h4" placeholder="v1h4" class="input"> -->
+      </div>
+      <div class="tile is-child is-one box">
+        <input type="text" name="v1h5" id="v1h5" placeholder="v1h5" class="input">
+        <button class="button is-success">Feedback</button>
+      </div>
+    </div>
+    <div class="tile is-parent">
+      <div class="tile is-child is-one box">
+        <input type="text" name="v1h1" id="v1h1" placeholder="v1h1" class="input">
+        <button class="button is-success">Feedback</button>
+      </div>
+      <div class="tile is-child is-one box">
+        <input type="text" name="v1h2" id="v1h2" placeholder="v1h2" class="input">
+        <button class="button is-success">Feedback</button>
+      </div>
+      <div class="tile is-child is-one box">
+        <input type="text" name="v1h3" id="v1h3" placeholder="v1h3" class="input">
+        <button class="button is-success">Feedback</button>
+      </div>
+      <div class="tile is-child is-one box">
+        <input type="text" name="v1h4" id="v1h4" placeholder="v1h4" class="input">
+        <button class="button is-success">Feedback</button>
+      </div>
+      <div class="tile is-child is-one box">
+        <input type="text" name="v1h5" id="v1h5" placeholder="v1h5" class="input">
+        <button class="button is-success">Feedback</button>
+      </div>
+    </div>
+    <div class="tile is-parent">
+      <div class="tile is-child is-one box">
+        <input type="text" name="v1h1" id="v1h1" placeholder="v1h1" class="input">
+        <button class="button is-success">Feedback</button>
+      </div>
+      <div class="tile is-child is-one box">
+        <!-- <input type="text" name="v1h2" id="v1h2" placeholder="v1h2" class="input"> -->
+      </div>
+      <div class="tile is-child is-one box">
+        <input type="text" name="v1h3" id="v1h3" placeholder="v1h3" class="input">
+        <button class="button is-success">Feedback</button>
+      </div>
+      <div class="tile is-child is-one box">
+        <!-- <input type="text" name="v1h4" id="v1h4" placeholder="v1h4" class="input"> -->
+      </div>
+      <div class="tile is-child is-one box">
+        <input type="text" name="v1h5" id="v1h5" placeholder="v1h5" class="input">
+        <button class="button is-success">Feedback</button>
+      </div>
+    </div>
+    <div class="tile is-parent">
+      <div class="tile is-child is-one box">
+        <input type="text" name="v1h1" id="v1h1" placeholder="v1h1" class="input">
+        <button class="button is-success">Feedback</button>
+      </div>
+      <div class="tile is-child is-one box">
+        <input type="text" name="v1h2" id="v1h2" placeholder="v1h2" class="input">
+        <button class="button is-success">Feedback</button>
+      </div>
+      <div class="tile is-child is-one box">
+        <input type="text" name="v1h3" id="v1h3" placeholder="v1h3" class="input">
+        <button class="button is-success">Feedback</button>
+      </div>
+      <div class="tile is-child is-one box">
+        <input type="text" name="v1h4" id="v1h4" placeholder="v1h4" class="input">
+        <button class="button is-success">Feedback</button>
+      </div>
+      <div class="tile is-child is-one box">
+        <input type="text" name="v1h5" id="v1h5" placeholder="v1h5" class="input">
+        <button class="button is-success">Feedback</button>
+      </div>
+    </div>
   </div>
-
 </section>

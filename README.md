@@ -21,6 +21,8 @@ Ready to run in production? Please [check our deployment guides](https://hexdocs
 # Feature TODOs
 
   * Initial Data Entry
+  * Uncapitalize all input-letters
+  * 
   * Show Options
   * Select Assumptions (Optional?)
   * Show Swap Recommendation Path

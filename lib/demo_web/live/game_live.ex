@@ -1,8 +1,9 @@
 defmodule DemoWeb.GameLive do
   use Phoenix.LiveView
   alias Demo.Waffle.Board
+  alias DemoWeb.Util.WaffleUtil
 
-  @keys [:iteration, :letters, :board]
+  @keys [:iteration, :letters, :board, :example_toggle, :example_toggle_class]
 
   def render(assigns) do
     DemoWeb.GameView.render("index.html", assigns)
@@ -12,7 +13,11 @@ defmodule DemoWeb.GameLive do
     {:ok,
      assign(socket,
        iteration: 0,
-       board: %Board{ # Dummy zeroed-out board to start with
+       example_toggle: :green,
+       example_toggle_class: "button is-primary",
+
+       # Dummy zeroed-out board to start with
+       board: %Board{
          characterStrings: [
            ["a", "a", "a", "a", "a"],
            ["a", " ", "a", " ", "a"],
@@ -37,6 +42,22 @@ defmodule DemoWeb.GameLive do
 
   def handle_event("dec_iteration", _value, socket) do
     {:noreply, assign(socket, :iteration, -1 + socket.assigns.iteration)}
+  end
+
+  def handle_event("toggle_example", _value, socket) do
+    current_color_atom = socket.assigns.example_toggle
+    new_color_atom = current_color_atom |> WaffleUtil.cycle_color_atom()
+    new_color_class = new_color_atom |> WaffleUtil.color_atom_to_bulma_color_class()
+    # socket =
+    #   socket
+    #   |> assign(:example_toggle, new_color_atom)
+    #   |> assign(:example_toggle_class, new_color_class)
+    # {:noreply, socket}
+    {:noreply, assign(
+      socket,
+      example_toggle: new_color_atom,
+      example_toggle_class: new_color_class
+      )}
   end
 
   def handle_event("update_feedback", %{"toggle" => board_entry_key}, socket) do

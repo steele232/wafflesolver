@@ -16,7 +16,7 @@
     <div class="tile is-parent">
       <div class="tile is-child is-one box">
         <input type="text" name="v1h1" id="v1h1" placeholder="v1h1" class="input">
-        <button phx-click="update_feedback" phx-value-toggle="v1h1" class="button is-success">Feedback</button>
+        <button phx-click="update_feedback" phx-value-toggle="v1h1" class={@board_form_state.v1h1.feedback_color_class}>Feedback</button>
       </div>
       <div class="tile is-child is-one box">
         <input type="text" name="v1h2" id="v1h2" placeholder="v1h2" class="input">

@@ -5,7 +5,7 @@ defmodule DemoWeb.GameLive do
   alias DemoWeb.BoardForm
   alias DemoWeb.BoardSquareForm
 
-  @keys [:iteration, :letters, :board, :board_form_state, :example_toggle, :example_toggle_class]
+  @keys [:board_form_state, :board, :iteration]
 
   def render(assigns) do
     DemoWeb.GameView.render("index.html", assigns)
@@ -13,29 +13,10 @@ defmodule DemoWeb.GameLive do
 
   def mount(_params, _session, socket) do
     {:ok,
-     assign(socket,
-       iteration: 0,
-       example_toggle: :green,
-       example_toggle_class: "button is-primary",
-       board_form_state: %BoardForm{},
-
-       # Dummy zeroed-out board to start with
-       board: %Board{
-         characterStrings: [
-           ["a", "a", "a", "a", "a"],
-           ["a", " ", "a", " ", "a"],
-           ["a", "a", "a", "a", "a"],
-           ["a", " ", "a", " ", "a"],
-           ["a", "a", "a", "a", "a"]
-         ],
-         feedbackStrings: [
-           ["2", "0", "0", "0", "2"],
-           ["0", " ", "0", " ", "0"],
-           ["0", "0", "0", "0", "0"],
-           ["0", " ", "0", " ", "0"],
-           ["2", "0", "0", "0", "2"]
-         ]
-       }
+      assign(socket,
+        iteration: 0,
+        board: nil,
+        board_form_state: %BoardForm{}
      )}
   end
 
@@ -47,22 +28,6 @@ defmodule DemoWeb.GameLive do
     {:noreply, assign(socket, :iteration, -1 + socket.assigns.iteration)}
   end
 
-  def handle_event("toggle_example", _value, socket) do
-    current_color_atom = socket.assigns.example_toggle
-    new_color_atom = current_color_atom |> WaffleUtil.cycle_color_atom()
-    new_color_class = new_color_atom |> WaffleUtil.color_atom_to_bulma_color_class()
-    # socket =
-    #   socket
-    #   |> assign(:example_toggle, new_color_atom)
-    #   |> assign(:example_toggle_class, new_color_class)
-    # {:noreply, socket}
-    {:noreply, assign(
-      socket,
-      example_toggle: new_color_atom,
-      example_toggle_class: new_color_class
-      )}
-  end
-
   def handle_event("update_feedback", %{"toggle" => board_entry_key}, socket) do
     board_entry_key |> IO.inspect()
     board_entry_key_atom = board_entry_key |> String.to_existing_atom() |> IO.inspect()
@@ -72,6 +37,10 @@ defmodule DemoWeb.GameLive do
       &cycleColorOnBoardSquareForm/1)
     {:noreply, assign(socket, :board_form_state, newBoardState)}
   end
+  # def handle_event("update_form", paramMap, socket) do
+    # paramMap |> IO.inspect
+    # {:noreply, socket}
+  # end
 
   defp cycleColorOnBoardSquareForm(x = %BoardSquareForm{feedback_color: feedback_color_atom}) do
     newColorAtom = WaffleUtil.cycle_color_atom(feedback_color_atom)

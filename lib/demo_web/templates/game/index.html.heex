@@ -1,87 +1,211 @@
 <section class="container is-widescreen">
-  <h3 class="title">Initial Waffle Board Form</h3>
-  <!-- Bulma Tiling for the inputs ... -->
-  <form phx-submit="save_board_letters_form">
-    <div class="tile is-ancestor is-vertical">
-      <div class="tile is-parent">
-        <div class="tile is-child is-one box">
-          <input type="text" name="v1h1" id="v1h1" placeholder="v1h1" class="input" maxlength="1">
+
+  <div class={ unless @current_fsm_state==:explanation, do: "is-hidden" }>
+    <section class="section">
+      <h1 class="title">Waffle Solver</h1>
+      <p>Waffle is a online puzzle-of-the-day game like Wordle but a little harder in some ways.</p>
+      <p>Each row makes a 5 letter word and each column makes a 5 letter word.</p>
+      <p>The game gives feedback about each letter in its position to give hints about the solution.</p>
+      <ul>
+        <li>Green means this slot has a correct letter in the correct position, this letter should not need to move.
+        </li>
+        <li>Yellow means this slot has a letter in it that should exist somewhere in the words for that row or column
+          but NOT in that exact position.</li>
+        <li>Gray or White means this slot has a letter in it that does NOT exist in the words for that row or column.
+        </li>
+      </ul>
+      <p>The actions that the user performs are to select two letters and swap them and then view the new feedback and
+        decide what letters to swap next.</p>
+      <p>In the best case scenario, it is always possible to make the board entirely green with 10 swaps. If you do
+        that, you get 5 stars. If you get the board with more swaps, then the star rewards are reduced by one star per
+        swap. If you cannot make the board green in 15 swaps, then you get 0 stars and the game is over.</p>
+      <span>Here is the link to the Waffle game: <a href="http://wafflegame.net/">Online Waffle Game</a></span>
+      <br/>
+      <button phx-click="start_solving" class="button is-primary">Start Solving!</button>
+    </section>
+  </div>
+
+  <div class={ unless @current_fsm_state==:begin_letters_form, do: "is-hidden" }>
+    <h3 class="title">Initial Waffle Board Form</h3>
+    <!-- Bulma Tiling for the inputs ... -->
+    <form phx-submit="save_board_letters_form">
+      <div class="tile is-ancestor is-vertical">
+        <div class="tile is-parent">
+          <div class="tile is-child is-one box">
+            <input type="text" name="v1h1" id="v1h1" placeholder="v1h1" class="input" maxlength="1">
+          </div>
+          <div class="tile is-child is-one box">
+            <input type="text" name="v1h2" id="v1h2" placeholder="v1h2" class="input" maxlength="1">
+          </div>
+          <div class="tile is-child is-one box">
+            <input type="text" name="v1h3" id="v1h3" placeholder="v1h3" class="input" maxlength="1">
+          </div>
+          <div class="tile is-child is-one box">
+            <input type="text" name="v1h4" id="v1h4" placeholder="v1h4" class="input" maxlength="1">
+          </div>
+          <div class="tile is-child is-one box">
+            <input type="text" name="v1h5" id="v1h5" placeholder="v1h5" class="input" maxlength="1">
+          </div>
         </div>
-        <div class="tile is-child is-one box">
-          <input type="text" name="v1h2" id="v1h2" placeholder="v1h2" class="input" maxlength="1">
+        <div class="tile is-parent">
+          <div class="tile is-child is-one box">
+            <input type="text" name="v2h1" id="v2h1" placeholder="v2h1" class="input" maxlength="1">
+          </div>
+          <div class="tile is-child is-one box"></div>
+          <div class="tile is-child is-one box">
+            <input type="text" name="v2h3" id="v2h3" placeholder="v2h3" class="input" maxlength="1">
+          </div>
+          <div class="tile is-child is-one box"></div>
+          <div class="tile is-child is-one box">
+            <input type="text" name="v2h5" id="v2h5" placeholder="v2h5" class="input" maxlength="1">
+          </div>
         </div>
-        <div class="tile is-child is-one box">
-          <input type="text" name="v1h3" id="v1h3" placeholder="v1h3" class="input" maxlength="1">
+        <div class="tile is-parent">
+          <div class="tile is-child is-one box">
+            <input type="text" name="v3h1" id="v3h1" placeholder="v3h1" class="input" maxlength="1">
+          </div>
+          <div class="tile is-child is-one box">
+            <input type="text" name="v3h2" id="v3h2" placeholder="v3h2" class="input" maxlength="1">
+          </div>
+          <div class="tile is-child is-one box">
+            <input type="text" name="v3h3" id="v3h3" placeholder="v3h3" class="input" maxlength="1">
+          </div>
+          <div class="tile is-child is-one box">
+            <input type="text" name="v3h4" id="v3h4" placeholder="v3h4" class="input" maxlength="1">
+          </div>
+          <div class="tile is-child is-one box">
+            <input type="text" name="v3h5" id="v3h5" placeholder="v3h5" class="input" maxlength="1">
+          </div>
         </div>
-        <div class="tile is-child is-one box">
-          <input type="text" name="v1h4" id="v1h4" placeholder="v1h4" class="input" maxlength="1">
+        <div class="tile is-parent">
+          <div class="tile is-child is-one box">
+            <input type="text" name="v4h1" id="v4h1" placeholder="v4h1" class="input" maxlength="1">
+          </div>
+          <div class="tile is-child is-one box"></div>
+          <div class="tile is-child is-one box">
+            <input type="text" name="v4h3" id="v4h3" placeholder="v4h3" class="input" maxlength="1">
+          </div>
+          <div class="tile is-child is-one box"></div>
+          <div class="tile is-child is-one box">
+            <input type="text" name="v4h5" id="v4h5" placeholder="v4h5" class="input" maxlength="1">
+          </div>
         </div>
-        <div class="tile is-child is-one box">
-          <input type="text" name="v1h5" id="v1h5" placeholder="v1h5" class="input" maxlength="1">
+        <div class="tile is-parent">
+          <div class="tile is-child is-one box">
+            <input type="text" name="v5h1" id="v5h1" placeholder="v5h1" class="input" maxlength="1">
+          </div>
+          <div class="tile is-child is-one box">
+            <input type="text" name="v5h2" id="v5h2" placeholder="v5h2" class="input" maxlength="1">
+          </div>
+          <div class="tile is-child is-one box">
+            <input type="text" name="v5h3" id="v5h3" placeholder="v5h3" class="input" maxlength="1">
+          </div>
+          <div class="tile is-child is-one box">
+            <input type="text" name="v5h4" id="v5h4" placeholder="v5h4" class="input" maxlength="1">
+          </div>
+          <div class="tile is-child is-one box">
+            <input type="text" name="v5h5" id="v5h5" placeholder="v5h5" class="input" maxlength="1">
+          </div>
         </div>
       </div>
-      <div class="tile is-parent">
-        <div class="tile is-child is-one box">
-          <input type="text" name="v2h1" id="v2h1" placeholder="v2h1" class="input" maxlength="1">
+      <button type="submit" class="button is-primary">Start Entering Feedbacks</button>
+    </form>
+    <button class="button" phx-click="letters_back">Back</button>
+  </div>
+
+  <div class={ unless @current_fsm_state==:begin_feedback_form, do: "is-hidden" }>
+    <h3>Future home of feedback button-toggling form !</h3>
+    <p>Here is a really really cool Feedback toggling tile group!</p>
+    <h3 class="title">Waffle Board Feedbacks Form</h3>
+    <!-- Bulma Tiling for the inputs ... -->
+    <form phx-submit="save_board_feedbacks_form">
+      <div class="tile is-ancestor is-vertical">
+        <div class="tile is-parent">
+          <div class="tile is-child is-one box">
+            <input type="text" name="v1h1" id="v1h1" placeholder="v1h1" class="input" maxlength="1">
+          </div>
+          <div class="tile is-child is-one box">
+            <input type="text" name="v1h2" id="v1h2" placeholder="v1h2" class="input" maxlength="1">
+          </div>
+          <div class="tile is-child is-one box">
+            <input type="text" name="v1h3" id="v1h3" placeholder="v1h3" class="input" maxlength="1">
+          </div>
+          <div class="tile is-child is-one box">
+            <input type="text" name="v1h4" id="v1h4" placeholder="v1h4" class="input" maxlength="1">
+          </div>
+          <div class="tile is-child is-one box">
+            <input type="text" name="v1h5" id="v1h5" placeholder="v1h5" class="input" maxlength="1">
+          </div>
         </div>
-        <div class="tile is-child is-one box"></div>
-        <div class="tile is-child is-one box">
-          <input type="text" name="v2h3" id="v2h3" placeholder="v2h3" class="input" maxlength="1">
+        <div class="tile is-parent">
+          <div class="tile is-child is-one box">
+            <input type="text" name="v2h1" id="v2h1" placeholder="v2h1" class="input" maxlength="1">
+          </div>
+          <div class="tile is-child is-one box"></div>
+          <div class="tile is-child is-one box">
+            <input type="text" name="v2h3" id="v2h3" placeholder="v2h3" class="input" maxlength="1">
+          </div>
+          <div class="tile is-child is-one box"></div>
+          <div class="tile is-child is-one box">
+            <input type="text" name="v2h5" id="v2h5" placeholder="v2h5" class="input" maxlength="1">
+          </div>
         </div>
-        <div class="tile is-child is-one box"></div>
-        <div class="tile is-child is-one box">
-          <input type="text" name="v2h5" id="v2h5" placeholder="v2h5" class="input" maxlength="1">
+        <div class="tile is-parent">
+          <div class="tile is-child is-one box">
+            <input type="text" name="v3h1" id="v3h1" placeholder="v3h1" class="input" maxlength="1">
+          </div>
+          <div class="tile is-child is-one box">
+            <input type="text" name="v3h2" id="v3h2" placeholder="v3h2" class="input" maxlength="1">
+          </div>
+          <div class="tile is-child is-one box">
+            <input type="text" name="v3h3" id="v3h3" placeholder="v3h3" class="input" maxlength="1">
+          </div>
+          <div class="tile is-child is-one box">
+            <input type="text" name="v3h4" id="v3h4" placeholder="v3h4" class="input" maxlength="1">
+          </div>
+          <div class="tile is-child is-one box">
+            <input type="text" name="v3h5" id="v3h5" placeholder="v3h5" class="input" maxlength="1">
+          </div>
+        </div>
+        <div class="tile is-parent">
+          <div class="tile is-child is-one box">
+            <input type="text" name="v4h1" id="v4h1" placeholder="v4h1" class="input" maxlength="1">
+          </div>
+          <div class="tile is-child is-one box"></div>
+          <div class="tile is-child is-one box">
+            <input type="text" name="v4h3" id="v4h3" placeholder="v4h3" class="input" maxlength="1">
+          </div>
+          <div class="tile is-child is-one box"></div>
+          <div class="tile is-child is-one box">
+            <input type="text" name="v4h5" id="v4h5" placeholder="v4h5" class="input" maxlength="1">
+          </div>
+        </div>
+        <div class="tile is-parent">
+          <div class="tile is-child is-one box">
+            <input type="text" name="v5h1" id="v5h1" placeholder="v5h1" class="input" maxlength="1">
+          </div>
+          <div class="tile is-child is-one box">
+            <input type="text" name="v5h2" id="v5h2" placeholder="v5h2" class="input" maxlength="1">
+          </div>
+          <div class="tile is-child is-one box">
+            <input type="text" name="v5h3" id="v5h3" placeholder="v5h3" class="input" maxlength="1">
+          </div>
+          <div class="tile is-child is-one box">
+            <input type="text" name="v5h4" id="v5h4" placeholder="v5h4" class="input" maxlength="1">
+          </div>
+          <div class="tile is-child is-one box">
+            <input type="text" name="v5h5" id="v5h5" placeholder="v5h5" class="input" maxlength="1">
+          </div>
         </div>
       </div>
-      <div class="tile is-parent">
-        <div class="tile is-child is-one box">
-          <input type="text" name="v3h1" id="v3h1" placeholder="v3h1" class="input" maxlength="1">
-        </div>
-        <div class="tile is-child is-one box">
-          <input type="text" name="v3h2" id="v3h2" placeholder="v3h2" class="input" maxlength="1">
-        </div>
-        <div class="tile is-child is-one box">
-          <input type="text" name="v3h3" id="v3h3" placeholder="v3h3" class="input" maxlength="1">
-        </div>
-        <div class="tile is-child is-one box">
-          <input type="text" name="v3h4" id="v3h4" placeholder="v3h4" class="input" maxlength="1">
-        </div>
-        <div class="tile is-child is-one box">
-          <input type="text" name="v3h5" id="v3h5" placeholder="v3h5" class="input" maxlength="1">
-        </div>
-      </div>
-      <div class="tile is-parent">
-        <div class="tile is-child is-one box">
-          <input type="text" name="v4h1" id="v4h1" placeholder="v4h1" class="input" maxlength="1">
-        </div>
-        <div class="tile is-child is-one box"></div>
-        <div class="tile is-child is-one box">
-          <input type="text" name="v4h3" id="v4h3" placeholder="v4h3" class="input" maxlength="1">
-        </div>
-        <div class="tile is-child is-one box"></div>
-        <div class="tile is-child is-one box">
-          <input type="text" name="v4h5" id="v4h5" placeholder="v4h5" class="input" maxlength="1">
-        </div>
-      </div>
-      <div class="tile is-parent">
-        <div class="tile is-child is-one box">
-          <input type="text" name="v5h1" id="v5h1" placeholder="v5h1" class="input" maxlength="1">
-        </div>
-        <div class="tile is-child is-one box">
-          <input type="text" name="v5h2" id="v5h2" placeholder="v5h2" class="input" maxlength="1">
-        </div>
-        <div class="tile is-child is-one box">
-          <input type="text" name="v5h3" id="v5h3" placeholder="v5h3" class="input" maxlength="1">
-        </div>
-        <div class="tile is-child is-one box">
-          <input type="text" name="v5h4" id="v5h4" placeholder="v5h4" class="input" maxlength="1">
-        </div>
-        <div class="tile is-child is-one box">
-          <input type="text" name="v5h5" id="v5h5" placeholder="v5h5" class="input" maxlength="1">
-        </div>
-      </div>
-    </div>
-    <button type="submit" class="button is-primary">Save</button>
-    <button class="button" phx-click="clear_letters">Clear</button>
-  </form>
+      <button class="button">Solve</button>
+    </form>
+    <button class="button" phx-click="feedback_back">Back to Letters Form</button>
+  </div>
+
+  <div class={ unless @current_fsm_state==:display_solution, do: "is-hidden" }>
+    <h3>Future home of solution displaying !!</h3>
+    <button phx-click="add_another_feedback_cycle" class="button">Add another Feedback Cycle</button>
+  </div>
+
 </section>

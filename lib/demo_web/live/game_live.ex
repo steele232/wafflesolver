@@ -37,26 +37,42 @@ defmodule DemoWeb.GameLive do
   def handle_event("save_board_letters_form", paramMap, socket) do
     paramMap |> IO.inspect(label: "save_board_letters_form")
 
-    # TODO just read in ALL the letters and ... IDK yell if one is missing(?) Ecto changesets would be nice.. but maybe I can refactor to that in a bit..
+    # lowercase all user input for processing
+    paramMap = paramMap |> Enum.map(fn {k, input} -> {k, input |> String.downcase()} end) |> Enum.into(%{})
 
-    # TODO handle letters submission, possibly any capitalization things, etc
-
-    # TODO save the board variable -- with characters only; we can always go back and make a new instance with the feedbacks included..
-    #   TODO save the board as
-    # TODO prop up the board_form_state variable for feedback button toggling
-    #   TODO save the board form state as is
-    # TODO do the above^ by iterating through the params map..
-    newBoard = nil
-    newBoardFormState = nil
-
-    # %{"v1h1" => newChar} = paramMap
-
-    # newBoardState =
-    #   Map.update!(
-    #     socket.assigns.board_form_state,
-    #     :v1h1,
-    #     fn oldBoardFormState -> updateCharacterOnBoardSquareForm(oldBoardFormState, newChar) end
-    #   )
+    %{
+      "v1h1" => v1h1,
+      "v1h2" => v1h2,
+      "v1h3" => v1h3,
+      "v1h4" => v1h4,
+      "v1h5" => v1h5,
+      "v2h1" => v2h1,
+      "v2h3" => v2h3,
+      "v2h5" => v2h5,
+      "v3h1" => v3h1,
+      "v3h2" => v3h2,
+      "v3h3" => v3h3,
+      "v3h4" => v3h4,
+      "v3h5" => v3h5,
+      "v4h1" => v4h1,
+      "v4h3" => v4h3,
+      "v4h5" => v4h5,
+      "v5h1" => v5h1,
+      "v5h2" => v5h2,
+      "v5h3" => v5h3,
+      "v5h4" => v5h4,
+      "v5h5" => v5h5
+    } = paramMap
+    newBoard = %Board{
+      characterStrings: [
+        [v1h1,v1h2,v1h3,v1h4,v1h5],
+        [v2h1," ",v2h3," ",v2h5],
+        [v3h1,v3h2,v3h3,v3h4,v3h5],
+        [v4h1," ",v4h3," ",v4h5],
+        [v5h1,v5h2,v5h3,v5h4,v5h5]
+      ]
+    }
+    newBoardFormState = BoardForm.fromLettersMap(paramMap)
 
     socket =
       socket

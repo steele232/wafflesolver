@@ -13,10 +13,10 @@ defmodule DemoWeb.GameLive do
 
   def mount(_params, _session, socket) do
     {:ok,
-      assign(socket,
-        iteration: 0,
-        board: nil,
-        board_form_state: %BoardForm{}
+     assign(socket,
+       iteration: 0,
+       board: nil,
+       board_form_state: %BoardForm{}
      )}
   end
 
@@ -31,21 +31,40 @@ defmodule DemoWeb.GameLive do
   def handle_event("update_feedback", %{"toggle" => board_entry_key}, socket) do
     board_entry_key |> IO.inspect()
     board_entry_key_atom = board_entry_key |> String.to_existing_atom() |> IO.inspect()
-    newBoardState = Map.update!(
-      socket.assigns.board_form_state,
-      board_entry_key_atom,
-      &cycleColorOnBoardSquareForm/1)
+
+    newBoardState =
+      Map.update!(
+        socket.assigns.board_form_state,
+        board_entry_key_atom,
+        &cycleColorOnBoardSquareForm/1
+      )
+
     {:noreply, assign(socket, :board_form_state, newBoardState)}
   end
-  # def handle_event("update_form", paramMap, socket) do
-    # paramMap |> IO.inspect
-    # {:noreply, socket}
-  # end
+
+  def handle_event("update_form", paramMap, socket) do
+    paramMap |> IO.inspect()
+    %{"v1h1" => newChar} = paramMap
+
+    newBoardState =
+      Map.update!(
+        socket.assigns.board_form_state,
+        :v1h1,
+        fn oldBoardFormState -> updateCharacterOnBoardSquareForm(oldBoardFormState, newChar) end
+      )
+
+    {:noreply, socket, :board_form_state, newBoardState}
+  end
 
   defp cycleColorOnBoardSquareForm(x = %BoardSquareForm{feedback_color: feedback_color_atom}) do
     newColorAtom = WaffleUtil.cycle_color_atom(feedback_color_atom)
     newColorClass = WaffleUtil.color_atom_to_bulma_color_class(newColorAtom)
+
     Map.update!(x, :feedback_color, fn _oldColorAtom -> newColorAtom end)
     |> Map.update!(:feedback_color_class, fn _oldColorClass -> newColorClass end)
+  end
+
+  defp updateCharacterOnBoardSquareForm(x = %BoardSquareForm{}, newCharacter) do
+    Map.update!(x, :character, fn _oldChar -> newCharacter end)
   end
 end

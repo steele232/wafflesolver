@@ -1,129 +1,87 @@
 <section class="container is-widescreen">
   <h3 class="title">Initial Waffle Board Form</h3>
   <!-- Bulma Tiling for the inputs ... -->
-  <form>
-    <!--  phx-change="update_form"  -->
+  <form phx-submit="save_board_letters_form">
     <div class="tile is-ancestor is-vertical">
       <div class="tile is-parent">
         <div class="tile is-child is-one box">
           <input type="text" name="v1h1" id="v1h1" placeholder="v1h1" class="input" maxlength="1">
-          <!--  value={@board_form_state.v1h1.feedback_color_class} -->
-          <span phx-click="update_feedback" phx-value-toggle="v1h1"
-            class={@board_form_state.v1h1.feedback_color_class}>Feedback</span>
         </div>
         <div class="tile is-child is-one box">
           <input type="text" name="v1h2" id="v1h2" placeholder="v1h2" class="input" maxlength="1">
-          <button phx-click="update_feedback" phx-value-toggle="v1h2"
-            class={@board_form_state.v1h2.feedback_color_class}>Feedback</button>
         </div>
         <div class="tile is-child is-one box">
           <input type="text" name="v1h3" id="v1h3" placeholder="v1h3" class="input" maxlength="1">
-          <button phx-click="update_feedback" phx-value-toggle="v1h3"
-            class={@board_form_state.v1h3.feedback_color_class}>Feedback</button>
         </div>
         <div class="tile is-child is-one box">
           <input type="text" name="v1h4" id="v1h4" placeholder="v1h4" class="input" maxlength="1">
-          <button phx-click="update_feedback" phx-value-toggle="v1h4"
-            class={@board_form_state.v1h4.feedback_color_class}>Feedback</button>
         </div>
         <div class="tile is-child is-one box">
           <input type="text" name="v1h5" id="v1h5" placeholder="v1h5" class="input" maxlength="1">
-          <button phx-click="update_feedback" phx-value-toggle="v1h5"
-            class={@board_form_state.v1h5.feedback_color_class}>Feedback</button>
         </div>
       </div>
       <div class="tile is-parent">
         <div class="tile is-child is-one box">
           <input type="text" name="v2h1" id="v2h1" placeholder="v2h1" class="input" maxlength="1">
-          <button phx-click="update_feedback" phx-value-toggle="v2h1"
-            class={@board_form_state.v2h1.feedback_color_class}>Feedback</button>
         </div>
         <div class="tile is-child is-one box"></div>
         <div class="tile is-child is-one box">
           <input type="text" name="v2h3" id="v2h3" placeholder="v2h3" class="input" maxlength="1">
-          <button phx-click="update_feedback" phx-value-toggle="v2h3"
-            class={@board_form_state.v2h3.feedback_color_class}>Feedback</button>
         </div>
         <div class="tile is-child is-one box"></div>
         <div class="tile is-child is-one box">
           <input type="text" name="v2h5" id="v2h5" placeholder="v2h5" class="input" maxlength="1">
-          <button phx-click="update_feedback" phx-value-toggle="v2h5"
-            class={@board_form_state.v2h5.feedback_color_class}>Feedback</button>
         </div>
       </div>
       <div class="tile is-parent">
         <div class="tile is-child is-one box">
           <input type="text" name="v3h1" id="v3h1" placeholder="v3h1" class="input" maxlength="1">
-          <button phx-click="update_feedback" phx-value-toggle="v3h1"
-            class={@board_form_state.v3h1.feedback_color_class}>Feedback</button>
         </div>
         <div class="tile is-child is-one box">
           <input type="text" name="v3h2" id="v3h2" placeholder="v3h2" class="input" maxlength="1">
-          <button phx-click="update_feedback" phx-value-toggle="v3h2"
-            class={@board_form_state.v3h2.feedback_color_class}>Feedback</button>
         </div>
         <div class="tile is-child is-one box">
           <input type="text" name="v3h3" id="v3h3" placeholder="v3h3" class="input" maxlength="1">
-          <button phx-click="update_feedback" phx-value-toggle="v3h3"
-            class={@board_form_state.v3h3.feedback_color_class}>Feedback</button>
         </div>
         <div class="tile is-child is-one box">
           <input type="text" name="v3h4" id="v3h4" placeholder="v3h4" class="input" maxlength="1">
-          <button phx-click="update_feedback" phx-value-toggle="v3h4"
-            class={@board_form_state.v3h4.feedback_color_class}>Feedback</button>
         </div>
         <div class="tile is-child is-one box">
           <input type="text" name="v3h5" id="v3h5" placeholder="v3h5" class="input" maxlength="1">
-          <button phx-click="update_feedback" phx-value-toggle="v3h5"
-            class={@board_form_state.v3h5.feedback_color_class}>Feedback</button>
         </div>
       </div>
       <div class="tile is-parent">
         <div class="tile is-child is-one box">
           <input type="text" name="v4h1" id="v4h1" placeholder="v4h1" class="input" maxlength="1">
-          <button phx-click="update_feedback" phx-value-toggle="v4h1"
-            class={@board_form_state.v4h1.feedback_color_class}>Feedback</button>
         </div>
         <div class="tile is-child is-one box"></div>
         <div class="tile is-child is-one box">
           <input type="text" name="v4h3" id="v4h3" placeholder="v4h3" class="input" maxlength="1">
-          <button phx-click="update_feedback" phx-value-toggle="v4h3"
-            class={@board_form_state.v4h3.feedback_color_class}>Feedback</button>
         </div>
         <div class="tile is-child is-one box"></div>
         <div class="tile is-child is-one box">
           <input type="text" name="v4h5" id="v4h5" placeholder="v4h5" class="input" maxlength="1">
-          <button phx-click="update_feedback" phx-value-toggle="v4h5"
-            class={@board_form_state.v4h5.feedback_color_class}>Feedback</button>
         </div>
       </div>
       <div class="tile is-parent">
         <div class="tile is-child is-one box">
           <input type="text" name="v5h1" id="v5h1" placeholder="v5h1" class="input" maxlength="1">
-          <button phx-click="update_feedback" phx-value-toggle="v5h1"
-            class={@board_form_state.v5h1.feedback_color_class}>Feedback</button>
         </div>
         <div class="tile is-child is-one box">
           <input type="text" name="v5h2" id="v5h2" placeholder="v5h2" class="input" maxlength="1">
-          <button phx-click="update_feedback" phx-value-toggle="v5h2"
-            class={@board_form_state.v5h2.feedback_color_class}>Feedback</button>
         </div>
         <div class="tile is-child is-one box">
           <input type="text" name="v5h3" id="v5h3" placeholder="v5h3" class="input" maxlength="1">
-          <button phx-click="update_feedback" phx-value-toggle="v5h3"
-            class={@board_form_state.v5h3.feedback_color_class}>Feedback</button>
         </div>
         <div class="tile is-child is-one box">
           <input type="text" name="v5h4" id="v5h4" placeholder="v5h4" class="input" maxlength="1">
-          <button phx-click="update_feedback" phx-value-toggle="v5h4"
-            class={@board_form_state.v5h4.feedback_color_class}>Feedback</button>
         </div>
         <div class="tile is-child is-one box">
           <input type="text" name="v5h5" id="v5h5" placeholder="v5h5" class="input" maxlength="1">
-          <button phx-click="update_feedback" phx-value-toggle="v5h5"
-            class={@board_form_state.v5h5.feedback_color_class}>Feedback</button>
         </div>
       </div>
     </div>
+    <button type="submit" class="button is-primary">Save</button>
+    <button class="button" phx-click="clear_letters">Clear</button>
   </form>
 </section>

@@ -1,0 +1,10 @@
+
+          <span phx-click="update_feedback" phx-value-toggle="v1h1"
+            class={@board_form_state.v1h1.feedback_color_class}>Feedback</span>
+            
+
+
+             <%= f = form_for(@changeset, phx_validate: :validate, phx_save: :save %>
+
+
+    <!--  phx-change="update_form"  -->

@@ -42,8 +42,22 @@ defmodule DemoWeb.GameLive do
     {:noreply, assign(socket, :board_form_state, newBoardState)}
   end
 
-  def handle_event("update_form", paramMap, socket) do
-    paramMap |> IO.inspect()
+  def handle_event("clear_letters", _params, socket) do
+    {:noreply, socket}
+  end
+
+  def handle_event("save_board_letters_form", paramMap, socket) do
+    paramMap |> IO.inspect(label: "save_board_letters_form")
+    # TODO just read in ALL the letters and ... IDK yell if one is missing(?) Ecto changesets would be nice.. but maybe I can refactor to that in a bit..
+
+    # TODO handle letters submission, possibly any capitalization things, etc
+
+    # TODO save the board variable -- with characters only; we can always go back and make a new instance with the feedbacks included..
+
+
+
+
+
     %{"v1h1" => newChar} = paramMap
 
     newBoardState =
@@ -53,7 +67,7 @@ defmodule DemoWeb.GameLive do
         fn oldBoardFormState -> updateCharacterOnBoardSquareForm(oldBoardFormState, newChar) end
       )
 
-    {:noreply, socket, :board_form_state, newBoardState}
+    {:noreply, assign(socket, :board_form_state, newBoardState)}
   end
 
   defp cycleColorOnBoardSquareForm(x = %BoardSquareForm{feedback_color: feedback_color_atom}) do

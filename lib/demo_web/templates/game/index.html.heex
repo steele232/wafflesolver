@@ -137,132 +137,133 @@
             class={@board_form_state.v1h3.feedback_color_class}>
             <%= @board_form_state.v1h3.character |> String.capitalize %>
           </button>
+        </div>
 
-          <div class="tile is-child is-one box">
-            <button phx-click="update_feedback" phx-value-toggle="v1h4"
-              class={@board_form_state.v1h4.feedback_color_class}>
-              <%= @board_form_state.v1h4.character |> String.capitalize %>
-            </button>
-          </div>
-          <div class="tile is-child is-one box">
-            <button phx-click="update_feedback" phx-value-toggle="v1h5"
-              class={@board_form_state.v1h5.feedback_color_class}>
-              <%= @board_form_state.v1h5.character |> String.capitalize %>
-            </button>
-          </div>
+        <div class="tile is-child is-one box">
+          <button phx-click="update_feedback" phx-value-toggle="v1h4"
+            class={@board_form_state.v1h4.feedback_color_class}>
+            <%= @board_form_state.v1h4.character |> String.capitalize %>
+          </button>
         </div>
-        <div class="tile is-parent">
-          <div class="tile is-child is-one box">
-            <button phx-click="update_feedback" phx-value-toggle="v2h1"
-              class={@board_form_state.v2h1.feedback_color_class}>
-              <%= @board_form_state.v2h1.character |> String.capitalize %>
-            </button>
-          </div>
-          <div class="tile is-child is-one box"></div>
-          <div class="tile is-child is-one box">
-            <button phx-click="update_feedback" phx-value-toggle="v2h3"
-              class={@board_form_state.v2h3.feedback_color_class}>
-              <%= @board_form_state.v2h3.character |> String.capitalize %>
-            </button>
-          </div>
-          <div class="tile is-child is-one box"></div>
-          <div class="tile is-child is-one box">
-            <button phx-click="update_feedback" phx-value-toggle="v2h5"
-              class={@board_form_state.v2h5.feedback_color_class}>
-              <%= @board_form_state.v2h5.character |> String.capitalize %>
-            </button>
-          </div>
-        </div>
-        <div class="tile is-parent">
-          <div class="tile is-child is-one box">
-            <button phx-click="update_feedback" phx-value-toggle="v3h1"
-              class={@board_form_state.v3h1.feedback_color_class}>
-              <%= @board_form_state.v3h1.character |> String.capitalize %>
-            </button>
-          </div>
-          <div class="tile is-child is-one box">
-            <button phx-click="update_feedback" phx-value-toggle="v3h2"
-              class={@board_form_state.v3h2.feedback_color_class}>
-              <%= @board_form_state.v3h2.character |> String.capitalize %>
-            </button>
-          </div>
-          <div class="tile is-child is-one box">
-            <button phx-click="update_feedback" phx-value-toggle="v3h3"
-              class={@board_form_state.v3h3.feedback_color_class}>
-              <%= @board_form_state.v3h3.character |> String.capitalize %>
-            </button>
-          </div>
-          <div class="tile is-child is-one box">
-            <button phx-click="update_feedback" phx-value-toggle="v3h4"
-              class={@board_form_state.v3h4.feedback_color_class}>
-              <%= @board_form_state.v3h4.character |> String.capitalize %>
-            </button>
-          </div>
-          <div class="tile is-child is-one box">
-            <button phx-click="update_feedback" phx-value-toggle="v3h5"
-              class={@board_form_state.v3h5.feedback_color_class}>
-              <%= @board_form_state.v3h5.character |> String.capitalize %>
-            </button>
-          </div>
-        </div>
-        <div class="tile is-parent">
-          <div class="tile is-child is-one box">
-            <button phx-click="update_feedback" phx-value-toggle="v4h1"
-              class={@board_form_state.v4h1.feedback_color_class}>
-              <%= @board_form_state.v4h1.character |> String.capitalize %>
-            </button>
-          </div>
-          <div class="tile is-child is-one box"></div>
-          <div class="tile is-child is-one box">
-            <button phx-click="update_feedback" phx-value-toggle="v4h3"
-              class={@board_form_state.v4h3.feedback_color_class}>
-              <%= @board_form_state.v4h3.character |> String.capitalize %>
-            </button>
-          </div>
-          <div class="tile is-child is-one box"></div>
-          <div class="tile is-child is-one box">
-            <button phx-click="update_feedback" phx-value-toggle="v4h5"
-              class={@board_form_state.v4h5.feedback_color_class}>
-              <%= @board_form_state.v4h5.character |> String.capitalize %>
-            </button>
-          </div>
-        </div>
-        <div class="tile is-parent">
-          <div class="tile is-child is-one box">
-            <button phx-click="update_feedback" phx-value-toggle="v5h1"
-              class={@board_form_state.v5h1.feedback_color_class}>
-              <%= @board_form_state.v5h1.character |> String.capitalize %>
-            </button>
-          </div>
-          <div class="tile is-child is-one box">
-            <button phx-click="update_feedback" phx-value-toggle="v5h2"
-              class={@board_form_state.v5h2.feedback_color_class}>
-              <%= @board_form_state.v5h2.character |> String.capitalize %>
-            </button>
-          </div>
-          <div class="tile is-child is-one box">
-            <button phx-click="update_feedback" phx-value-toggle="v5h3"
-              class={@board_form_state.v5h3.feedback_color_class}>
-              <%= @board_form_state.v5h3.character |> String.capitalize %>
-            </button>
-          </div>
-          <div class="tile is-child is-one box">
-            <button phx-click="update_feedback" phx-value-toggle="v5h4"
-              class={@board_form_state.v5h4.feedback_color_class}>
-              <%= @board_form_state.v5h4.character |> String.capitalize %>
-            </button>
-          </div>
-          <div class="tile is-child is-one box">
-            <button phx-click="update_feedback" phx-value-toggle="v5h5"
-              class={@board_form_state.v5h5.feedback_color_class}>
-              <%= @board_form_state.v5h5.character |> String.capitalize %>
-            </button>
-          </div>
+        <div class="tile is-child is-one box">
+          <button phx-click="update_feedback" phx-value-toggle="v1h5"
+            class={@board_form_state.v1h5.feedback_color_class}>
+            <%= @board_form_state.v1h5.character |> String.capitalize %>
+          </button>
         </div>
       </div>
-      <button phx-click="save_board_feedbacks_form" class="button is-primary">Solve</button>
-      <button class="button" phx-click="feedback_back">Back to Letters Form</button>
+
+      <div class="tile is-parent">
+        <div class="tile is-child is-one box">
+          <button phx-click="update_feedback" phx-value-toggle="v2h1"
+            class={@board_form_state.v2h1.feedback_color_class}>
+            <%= @board_form_state.v2h1.character |> String.capitalize %>
+          </button>
+        </div>
+        <div class="tile is-child is-one box"></div>
+        <div class="tile is-child is-one box">
+          <button phx-click="update_feedback" phx-value-toggle="v2h3"
+            class={@board_form_state.v2h3.feedback_color_class}>
+            <%= @board_form_state.v2h3.character |> String.capitalize %>
+          </button>
+        </div>
+        <div class="tile is-child is-one box"></div>
+        <div class="tile is-child is-one box">
+          <button phx-click="update_feedback" phx-value-toggle="v2h5"
+            class={@board_form_state.v2h5.feedback_color_class}>
+            <%= @board_form_state.v2h5.character |> String.capitalize %>
+          </button>
+        </div>
+      </div>
+      <div class="tile is-parent">
+        <div class="tile is-child is-one box">
+          <button phx-click="update_feedback" phx-value-toggle="v3h1"
+            class={@board_form_state.v3h1.feedback_color_class}>
+            <%= @board_form_state.v3h1.character |> String.capitalize %>
+          </button>
+        </div>
+        <div class="tile is-child is-one box">
+          <button phx-click="update_feedback" phx-value-toggle="v3h2"
+            class={@board_form_state.v3h2.feedback_color_class}>
+            <%= @board_form_state.v3h2.character |> String.capitalize %>
+          </button>
+        </div>
+        <div class="tile is-child is-one box">
+          <button phx-click="update_feedback" phx-value-toggle="v3h3"
+            class={@board_form_state.v3h3.feedback_color_class}>
+            <%= @board_form_state.v3h3.character |> String.capitalize %>
+          </button>
+        </div>
+        <div class="tile is-child is-one box">
+          <button phx-click="update_feedback" phx-value-toggle="v3h4"
+            class={@board_form_state.v3h4.feedback_color_class}>
+            <%= @board_form_state.v3h4.character |> String.capitalize %>
+          </button>
+        </div>
+        <div class="tile is-child is-one box">
+          <button phx-click="update_feedback" phx-value-toggle="v3h5"
+            class={@board_form_state.v3h5.feedback_color_class}>
+            <%= @board_form_state.v3h5.character |> String.capitalize %>
+          </button>
+        </div>
+      </div>
+      <div class="tile is-parent">
+        <div class="tile is-child is-one box">
+          <button phx-click="update_feedback" phx-value-toggle="v4h1"
+            class={@board_form_state.v4h1.feedback_color_class}>
+            <%= @board_form_state.v4h1.character |> String.capitalize %>
+          </button>
+        </div>
+        <div class="tile is-child is-one box"></div>
+        <div class="tile is-child is-one box">
+          <button phx-click="update_feedback" phx-value-toggle="v4h3"
+            class={@board_form_state.v4h3.feedback_color_class}>
+            <%= @board_form_state.v4h3.character |> String.capitalize %>
+          </button>
+        </div>
+        <div class="tile is-child is-one box"></div>
+        <div class="tile is-child is-one box">
+          <button phx-click="update_feedback" phx-value-toggle="v4h5"
+            class={@board_form_state.v4h5.feedback_color_class}>
+            <%= @board_form_state.v4h5.character |> String.capitalize %>
+          </button>
+        </div>
+      </div>
+      <div class="tile is-parent">
+        <div class="tile is-child is-one box">
+          <button phx-click="update_feedback" phx-value-toggle="v5h1"
+            class={@board_form_state.v5h1.feedback_color_class}>
+            <%= @board_form_state.v5h1.character |> String.capitalize %>
+          </button>
+        </div>
+        <div class="tile is-child is-one box">
+          <button phx-click="update_feedback" phx-value-toggle="v5h2"
+            class={@board_form_state.v5h2.feedback_color_class}>
+            <%= @board_form_state.v5h2.character |> String.capitalize %>
+          </button>
+        </div>
+        <div class="tile is-child is-one box">
+          <button phx-click="update_feedback" phx-value-toggle="v5h3"
+            class={@board_form_state.v5h3.feedback_color_class}>
+            <%= @board_form_state.v5h3.character |> String.capitalize %>
+          </button>
+        </div>
+        <div class="tile is-child is-one box">
+          <button phx-click="update_feedback" phx-value-toggle="v5h4"
+            class={@board_form_state.v5h4.feedback_color_class}>
+            <%= @board_form_state.v5h4.character |> String.capitalize %>
+          </button>
+        </div>
+        <div class="tile is-child is-one box">
+          <button phx-click="update_feedback" phx-value-toggle="v5h5"
+            class={@board_form_state.v5h5.feedback_color_class}>
+            <%= @board_form_state.v5h5.character |> String.capitalize %>
+          </button>
+        </div>
+      </div>
     </div>
+    <button phx-click="save_board_feedbacks_form" class="button is-primary">Solve</button>
+    <button class="button" phx-click="feedback_back">Back to Letters Form</button>
   </div>
 
   <div class={ unless @current_fsm_state==:display_solution, do: "is-hidden" }>

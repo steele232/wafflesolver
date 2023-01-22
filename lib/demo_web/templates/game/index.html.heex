@@ -115,7 +115,7 @@
         </div>
         <button type="submit" class="button is-primary">Start Entering Feedbacks</button>
       </form>
-      <br/>
+      <br />
       <button class="button" phx-click="letters_back">Back</button>
     </section>
   </div>
@@ -279,9 +279,23 @@
       <h1 class="title">Solver Results</h1>
       <hr />
       <h4 class="title">
-        Latest solution is: <%= @latest_solution |> Kernel.inspect(pretty: true) %>
+        Possible solutions are:
       </h4>
-      <p>We recommend going through only as many solver iterations as is required to know what the final board will look
+      <div>
+        <%= for solution <- @latest_solution do %>
+          <ul>
+            <li>First Horizontal Word(s): <%= solution.hw1 |> Kernel.inspect(pretty: true) %></li>
+            <li>Second Horizontal Word(s): <%= solution.hw2 |> Kernel.inspect(pretty: true) %></li>
+            <li>Third Horizontal Word(s): <%= solution.hw3 |> Kernel.inspect(pretty: true) %></li>
+            <li>First Vertical Word(s): <%= solution.vw1 |> Kernel.inspect(pretty: true) %></li>
+            <li>Second Vertical Word(s): <%= solution.vw2 |> Kernel.inspect(pretty: true) %></li>
+            <li>Third Vertical Word(s): <%= solution.vw3 |> Kernel.inspect(pretty: true) %></li>
+          </ul>
+          <br />
+          <% end %>
+      </div>
+      <hr />
+      <p>We recommend going through <i>only</i> as many solver iterations as is required to know what the final board will look
         like.</p>
       <span>Optional Next Step: <button phx-click="add_another_feedback_cycle" class="button">Add another Feedback
           Cycle</button></span>

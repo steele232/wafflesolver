@@ -12,6 +12,7 @@ defmodule DemoWeb.GameLive do
     :current_fsm_state,
     :previous_fsm_state,
     :latest_solution,
+    :latest_solution_has_single_possible_solution,
     :board_history
   ]
 
@@ -29,6 +30,7 @@ defmodule DemoWeb.GameLive do
        previous_fsm_state: :explanation,
        board_form_state: %BoardForm{},
        latest_solution: nil,
+       latest_solution_has_single_possible_solution: false,
        board_history: []
      )}
   end

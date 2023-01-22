@@ -1157,4 +1157,38 @@ defmodule WaffleBoardTest do
   end
 
 
+  test "test 2023 Jan 21 #366 waffle first round" do
+
+    board1 = %Board{
+    characterStrings: [
+      ["n", "a", "m", "a", "h"],
+      ["a", " ", "y", " ", "a"],
+      ["z", "i", "p", "g", "e"],
+      ["e", " ", "a", " ", "l"],
+      ["l", "t", "o", "o", "l"]
+    ],
+    feedbackStrings: [
+      ["2", "0", "4", "0", "2"],
+      ["2", " ", "1", " ", "2"],
+      ["4", "0", "2", "0", "4"],
+      ["0", " ", "0", " ", "0"],
+      ["2", "0", "4", "0", "2"]
+    ]
+  }
+
+    foundImmediately = Waffle.solve([board1])
+    IO.inspect foundImmediately
+    # TODO this is an interesting bug
+    assert foundImmediately == [
+      %{
+        hw1: ["neigh"],
+        hw2: ["topaz"],
+        hw3: ["lapel", "legal"], # was "loyal" in the end -- not present in my list :0 (!!)
+        vw1: ["natal"],
+        vw2: ["empty", "imply"], # was "imply" in the end
+        vw3: ["hazel"]
+      }
+    ]
+  end
+
 end

@@ -1,14 +1,21 @@
 defmodule DemoWeb.GameLive do
   use Phoenix.LiveView
-  alias Mix.Tasks.Do
+  alias Demo.Waffle
   alias Demo.Waffle.Board
   alias DemoWeb.Util.WaffleUtil
   alias DemoWeb.BoardForm
   alias DemoWeb.BoardSquareForm
 
-  @keys [:board_form_state, :board, :current_fsm_state, :previous_fsm_state, :latest_solution]
+  @keys [
+    :board_form_state,
+    :board,
+    :current_fsm_state,
+    :previous_fsm_state,
+    :latest_solution,
+    :board_history
+  ]
 
-  @my_fsm_state [:explanation, :begin_letters_form, :begin_feedback_form, :display_solution]
+  @my_fsm_states [:explanation, :begin_letters_form, :begin_feedback_form, :display_solution]
 
   def render(assigns) do
     DemoWeb.GameView.render("index.html", assigns)
@@ -21,7 +28,8 @@ defmodule DemoWeb.GameLive do
        current_fsm_state: :explanation,
        previous_fsm_state: :explanation,
        board_form_state: %BoardForm{},
-       latest_solution: nil
+       latest_solution: nil,
+       board_history: []
      )}
   end
 
@@ -38,7 +46,8 @@ defmodule DemoWeb.GameLive do
     paramMap |> IO.inspect(label: "save_board_letters_form")
 
     # lowercase all user input for processing
-    paramMap = paramMap |> Enum.map(fn {k, input} -> {k, input |> String.downcase()} end) |> Enum.into(%{})
+    paramMap =
+      paramMap |> Enum.map(fn {k, input} -> {k, input |> String.downcase()} end) |> Enum.into(%{})
 
     %{
       "v1h1" => v1h1,
@@ -63,15 +72,17 @@ defmodule DemoWeb.GameLive do
       "v5h4" => v5h4,
       "v5h5" => v5h5
     } = paramMap
+
     newBoard = %Board{
       characterStrings: [
-        [v1h1,v1h2,v1h3,v1h4,v1h5],
-        [v2h1," ",v2h3," ",v2h5],
-        [v3h1,v3h2,v3h3,v3h4,v3h5],
-        [v4h1," ",v4h3," ",v4h5],
-        [v5h1,v5h2,v5h3,v5h4,v5h5]
+        [v1h1, v1h2, v1h3, v1h4, v1h5],
+        [v2h1, " ", v2h3, " ", v2h5],
+        [v3h1, v3h2, v3h3, v3h4, v3h5],
+        [v4h1, " ", v4h3, " ", v4h5],
+        [v5h1, v5h2, v5h3, v5h4, v5h5]
       ]
     }
+
     newBoardFormState = BoardForm.fromLettersMap(paramMap)
 
     socket =
@@ -114,43 +125,71 @@ defmodule DemoWeb.GameLive do
     Map.update!(x, :character, fn _oldChar -> newCharacter end)
   end
 
-  def handle_event("save_board_feedbacks_form", paramMap, socket) do
-    paramMap |> IO.inspect(label: "save_board_feedbacks_form")
-
+  def handle_event("save_board_feedbacks_form", _paramMap, socket) do
+    # TODO :: data transformation
+    #   board-form-state -> %Board{} for the SOLVE call
     # TODO ... solve it now!!!
+    # TODO then assign :latest_solution
 
-    # TODO just read in ALL the letters and ... IDK yell if one is missing(?) Ecto changesets would be nice.. but maybe I can refactor to that in a bit..
+    oldBoard = socket.assigns.board
+    oldCharacters = oldBoard.characterStrings
+    oldBoardFormState = socket.assigns.board_form_state
 
-    # TODO handle letters submission, possibly any capitalization things, etc
+    fbMap =
+      oldBoardFormState
+      |> Map.to_list()
+      |> Enum.filter(fn {k,_v} -> k != :__struct__ end)
+      |> IO.inspect(label: "save_board_feedbacks_form post filtering")
+      |> Enum.map(fn {k,
+                      %DemoWeb.BoardSquareForm{
+                        feedback_color: feedback_color,
+                        is_intersection: is_intersection
+                      } = _v} ->
+        num = getSolverSquareFeedbackNumber(feedback_color, is_intersection)
+        numStr = num |> Integer.to_string()
+        {k, numStr}
+      end)
+      |> Enum.into(%{})
 
-    # TODO save the board variable -- with characters only; we can always go back and make a new instance with the feedbacks included..
-    #   TODO save the board as
-    # TODO prop up the board_form_state variable for feedback button toggling
-    #   TODO save the board form state as is
-    # TODO do the above^ by iterating through the params map..
-    newBoard = nil
-    newBoardFormState = nil
+    newBoard = %Board{
+      characterStrings: oldCharacters,
+      feedbackStrings: [
+        [Map.get(fbMap,:v1h1), Map.get(fbMap,:v1h2), Map.get(fbMap,:v1h3), Map.get(fbMap,:v1h4), Map.get(fbMap,:v1h5)],
+        [Map.get(fbMap,:v2h1), " ", Map.get(fbMap,:v2h3), " ", Map.get(fbMap,:v2h5)],
+        [Map.get(fbMap,:v3h1), Map.get(fbMap,:v3h2), Map.get(fbMap,:v3h3), Map.get(fbMap,:v3h4), Map.get(fbMap,:v3h5)],
+        [Map.get(fbMap,:v4h1), " ", Map.get(fbMap,:v4h3), " ", Map.get(fbMap,:v4h5)],
+        [Map.get(fbMap,:v5h1), Map.get(fbMap,:v5h2), Map.get(fbMap,:v5h3), Map.get(fbMap,:v5h4), Map.get(fbMap,:v5h5)]
+      ]
+    }
 
-    # %{"v1h1" => newChar} = paramMap
+    oldBoardHistory = socket.assigns.board_history
+    newBoardHistory = [newBoard | oldBoardHistory]
+    solveCallArguments = newBoardHistory |> :lists.reverse()
 
-    # newBoardState =
-    #   Map.update!(
-    #     socket.assigns.board_form_state,
-    #     :v1h1,
-    #     fn oldBoardFormState -> updateCharacterOnBoardSquareForm(oldBoardFormState, newChar) end
-    #   )
-
-    latestSolution = nil
+    latestSolution = Waffle.solve(solveCallArguments)
+    IO.inspect(latestSolution, label: "latestSolution")
 
     socket =
       socket
       |> assign(:board, newBoard)
-      |> assign(:board_form_state, newBoardFormState)
+      |> assign(:board_history, newBoardHistory)
       |> assign(:current_fsm_state, :display_solution)
       |> assign(:previous_fsm_state, :begin_feedback_form)
       |> assign(:latest_solution, latestSolution)
 
     {:noreply, socket}
+  end
+
+  @spec getSolverSquareFeedbackNumber(:green | :grey | :yellow, boolean()) :: 0 | 1 | 2 | 4
+  def getSolverSquareFeedbackNumber(feedback_color, is_intersection) do
+    case feedback_color do
+      :green -> 2
+      :grey -> 0
+      :yellow -> case is_intersection do
+        true -> 4
+        false -> 1
+      end
+    end
   end
 
   def handle_event("add_another_feedback_cycle", _params, socket) do
@@ -161,4 +200,6 @@ defmodule DemoWeb.GameLive do
        board_form_state: %BoardForm{}
      )}
   end
+
+
 end

@@ -266,8 +266,14 @@
   </div>
 
   <div class={ unless @current_fsm_state==:display_solution, do: "is-hidden" }>
-    <h3>Future home of solution displaying !!</h3>
-    <button phx-click="add_another_feedback_cycle" class="button">Add another Feedback Cycle</button>
+    <section class="section">
+      <h1 class="title">Solution</h1>
+      <span>Optional Next Step: <button phx-click="add_another_feedback_cycle" class="button">Add another Feedback
+          Cycle</button></span>
+
+
+    </section>
+
   </div>
 
 </section>

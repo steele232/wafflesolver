@@ -1183,9 +1183,9 @@ defmodule WaffleBoardTest do
       %{
         hw1: ["neigh"],
         hw2: ["topaz"],
-        hw3: ["lapel", "legal"], # was "loyal" in the end -- not present in my list :0 (!!)
+        hw3: ["loyal"], # was "loyal" in the end -- not present in my list :0 (!!) that's a bug!
         vw1: ["natal"],
-        vw2: ["empty", "imply"], # was "imply" in the end
+        vw2: ["imply"], # was "imply" in the end
         vw3: ["hazel"]
       }
     ]

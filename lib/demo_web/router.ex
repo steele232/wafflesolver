@@ -17,10 +17,7 @@ defmodule DemoWeb.Router do
   scope "/", DemoWeb do
     pipe_through :browser
 
-    get "/", PageController, :index
-    get "/game", GameMvcController, :index
-    post "/game", GameMvcController, :solved
-    live "/game-live", GameLive
+    live "/", GameLive
   end
 
   # Other scopes may use custom stacks.

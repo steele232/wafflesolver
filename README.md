@@ -1,5 +1,9 @@
 # Waffle Solver
 
+## Try it Now! 
+
+Online Demo available at https://waffle-solver.fly.dev/ 
+
 ## Starting the Server
 
 To start your Phoenix server:
